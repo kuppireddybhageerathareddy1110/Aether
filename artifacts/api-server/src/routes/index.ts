@@ -7,6 +7,7 @@ import ragRouter from "./rag";
 import settingsRouter from "./settings";
 import projectsRouter from "./projects";
 import dashboardRouter from "./dashboard";
+import uploadRouter from "./upload";
 
 const router: IRouter = Router();
 
@@ -18,5 +19,6 @@ router.use(ragRouter);
 router.use(settingsRouter);
 router.use(projectsRouter);
 router.use(dashboardRouter);
+router.use(uploadRouter);
 
 export default router;
