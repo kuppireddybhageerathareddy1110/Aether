@@ -2,8 +2,17 @@ import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { Sidebar } from "@/components/Sidebar";
+
 import Dashboard from "@/pages/Dashboard";
-import Editor from "@/pages/Editor";
+import AgenticRAG from "@/pages/AgenticRAG";
+import LaTeXEditor from "@/pages/LaTeXEditor";
+import XAIDashboard from "@/pages/XAIDashboard";
+import MoodJournal from "@/pages/MoodJournal";
+import Notifications from "@/pages/Notifications";
+import Account from "@/pages/Account";
+import Help from "@/pages/Help";
+import Settings from "@/pages/Settings";
+
 import Graph from "@/pages/Graph";
 import QA from "@/pages/QA";
 import Journal from "@/pages/Journal";
@@ -27,7 +36,6 @@ import ResearchBrain from "@/pages/ResearchBrain";
 import ResearchOS from "@/pages/ResearchOS";
 import AetherCore from "@/pages/AetherCore";
 import Sandbox from "@/pages/Sandbox";
-import Settings from "@/pages/Settings";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient();
@@ -36,13 +44,24 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Dashboard} />
-      <Route path="/editor" component={Editor} />
+      {/* New feature routes */}
+      <Route path="/agentic-rag" component={AgenticRAG} />
+      <Route path="/latex-editor" component={LaTeXEditor} />
+      <Route path="/xai-dashboard" component={XAIDashboard} />
+      <Route path="/mood-journal" component={MoodJournal} />
+      <Route path="/notifications" component={Notifications} />
+      <Route path="/account" component={Account} />
+      <Route path="/help" component={Help} />
+      <Route path="/settings" component={Settings} />
+      {/* Legacy/existing routes */}
+      <Route path="/knowledge-graph" component={Graph} />
       <Route path="/graph" component={Graph} />
       <Route path="/qa" component={QA} />
       <Route path="/journal" component={Journal} />
       <Route path="/xai" component={XAI} />
       <Route path="/upload" component={Upload} />
       <Route path="/search" component={Search} />
+      <Route path="/rag-chat" component={Chat} />
       <Route path="/chat" component={Chat} />
       <Route path="/agents" component={Agents} />
       <Route path="/projects" component={Projects} />
@@ -60,7 +79,6 @@ function Router() {
       <Route path="/research-os" component={ResearchOS} />
       <Route path="/aether-core" component={AetherCore} />
       <Route path="/sandbox" component={Sandbox} />
-      <Route path="/settings" component={Settings} />
       <Route component={NotFound} />
     </Switch>
   );
