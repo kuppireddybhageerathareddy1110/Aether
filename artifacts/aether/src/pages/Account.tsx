@@ -1,48 +1,59 @@
 import { useState } from 'react';
-import { User, KeyRound, Monitor, CreditCard, Database, Eye, EyeOff, Copy, Trash2, RefreshCw, CheckCircle } from 'lucide-react';
+import { User, KeyRound, Shield, Activity, ExternalLink, Copy, CheckCircle, RefreshCw, Plus, Trash2 } from 'lucide-react';
 
-const apiKeys = [
-  { id: 1, name: 'Production Key', prefix: 'aether-prod-', key: 'aether-prod-xK9mP2vQ8rT5nL1w', created: 'Jun 1, 2026', lastUsed: '2 min ago' },
-  { id: 2, name: 'Development Key', prefix: 'aether-dev-', key: 'aether-dev-yH4jN7uB6sR3kM9p', created: 'May 15, 2026', lastUsed: '1 day ago' },
+const TABS = [
+  { key: 'profile', label: 'Profile', icon: User },
+  { key: 'api', label: 'API Keys', icon: KeyRound },
+  { key: 'billing', label: 'Billing', icon: Shield },
+  { key: 'activity', label: 'Activity', icon: Activity },
+] as const;
+type Tab = typeof TABS[number]['key'];
+
+const mockKeys = [
+  { id: 1, name: 'Production API', key: 'sk-aether-prod-x9k2m...', created: '2025-03-12', lastUsed: '2 hours ago', perms: 'Full Access' },
+  { id: 2, name: 'Read-only Key', key: 'sk-aether-ro-7f3v...', created: '2025-05-01', lastUsed: '5 days ago', perms: 'Read Only' },
 ];
 
-const sessions = [
-  { device: 'Chrome on macOS', location: 'Hyderabad, India', ip: '103.xx.xx.xx', current: true, time: 'Active now' },
-  { device: 'Firefox on Ubuntu', location: 'Bangalore, India', ip: '117.xx.xx.xx', current: false, time: '3 days ago' },
+const mockActivity = [
+  { action: 'Knowledge graph generated', time: '2h ago', type: 'graph', detail: 'Attention Mechanisms — 16 nodes' },
+  { action: 'RAG query executed', time: '4h ago', type: 'rag', detail: 'Confidence: 89%' },
+  { action: 'Journal entry saved', time: '8h ago', type: 'journal', detail: 'Mood: Happy (0.84)' },
+  { action: 'XAI analysis completed', time: '1d ago', type: 'xai', detail: 'Feature importance computed' },
+  { action: 'Settings updated', time: '2d ago', type: 'system', detail: 'Theme and model changed' },
 ];
+
+const typeColor: Record<string, string> = { graph: 'bg-emerald-400', rag: 'bg-teal-400', journal: 'bg-pink-400', xai: 'bg-amber-400', system: 'bg-blue-400' };
 
 export default function Account() {
-  const [activeTab, setActiveTab] = useState<'profile' | 'apikeys' | 'sessions' | 'plan' | 'quota'>('profile');
-  const [revealed, setRevealed] = useState<Record<number, boolean>>({});
+  const [activeTab, setActiveTab] = useState<Tab>('profile');
   const [copied, setCopied] = useState<number | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [profile, setProfile] = useState({
+    name: 'K. Kuppireddy', email: 'bhageeratha@aether.ai',
+    bio: 'AI researcher focused on knowledge graphs and explainable ML.', role: 'Lead Researcher',
+    institution: 'Aether Research Lab', timezone: 'UTC-8 (PST)',
+  });
 
-  const copyKey = (id: number, key: string) => {
+  const copy = (id: number, key: string) => {
     navigator.clipboard.writeText(key).catch(() => {});
-    setCopied(id);
-    setTimeout(() => setCopied(null), 2000);
+    setCopied(id); setTimeout(() => setCopied(null), 2000);
   };
 
-  const tabs = [
-    { key: 'profile', label: 'Profile', icon: User },
-    { key: 'apikeys', label: 'API Keys', icon: KeyRound },
-    { key: 'sessions', label: 'Sessions', icon: Monitor },
-    { key: 'plan', label: 'Plan', icon: CreditCard },
-    { key: 'quota', label: 'Quota', icon: Database },
-  ] as const;
+  const save = () => {
+    setSaving(true); setTimeout(() => { setSaving(false); setSaved(true); setTimeout(() => setSaved(false), 2000); }, 800);
+  };
 
   return (
     <div className="h-screen flex flex-col bg-zinc-950">
       <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4">
-        <h1 className="text-xl font-bold text-white flex items-center gap-2">
-          <User className="w-5 h-5 text-zinc-400" />Account
-        </h1>
-        <p className="text-xs text-zinc-500 mt-0.5">Manage your profile, API keys, and workspace settings</p>
+        <h1 className="text-xl font-bold text-white flex items-center gap-2"><User className="w-5 h-5 text-zinc-400" />Account</h1>
+        <p className="text-xs text-zinc-500 mt-0.5">Manage your profile, API keys, and usage</p>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Tab nav */}
         <div className="w-44 border-r border-zinc-800 bg-zinc-900/30 p-3 space-y-1">
-          {tabs.map(tab => (
+          {TABS.map(tab => (
             <button key={tab.key} onClick={() => setActiveTab(tab.key)}
               className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition-all text-left ${activeTab === tab.key ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-white hover:bg-zinc-800/50'}`}>
               <tab.icon className="w-3.5 h-3.5" />{tab.label}
@@ -50,116 +61,106 @@ export default function Account() {
           ))}
         </div>
 
-        {/* Content */}
         <div className="flex-1 overflow-auto p-6">
           {activeTab === 'profile' && (
-            <div className="max-w-lg space-y-4">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-2xl font-bold text-white">K</div>
-                  <div>
-                    <div className="text-lg font-bold text-white">K. Kuppireddy</div>
-                    <div className="text-sm text-zinc-500">bhageeratha@aether.ai</div>
-                    <div className="text-xs text-emerald-400 mt-0.5">● Online · Pro Plan</div>
+            <div className="max-w-lg space-y-5">
+              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 flex items-center gap-5">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-2xl font-bold text-white flex-shrink-0">K</div>
+                <div className="flex-1">
+                  <div className="text-base font-bold text-white">{profile.name}</div>
+                  <div className="text-xs text-zinc-500">{profile.email}</div>
+                  <div className="mt-2 flex gap-2">
+                    <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-[10px] rounded-full border border-emerald-500/20">Pro Plan</span>
+                    <span className="px-2 py-0.5 bg-zinc-700 text-zinc-400 text-[10px] rounded-full">{profile.role}</span>
                   </div>
                 </div>
-                {[{ label: 'Full Name', value: 'K. Bhogendranath Reddy Kuppireddy' }, { label: 'Email', value: 'bhageeratha@aether.ai' }, { label: 'Workspace', value: 'Aether Research Labs' }, { label: 'Timezone', value: 'Asia/Kolkata (UTC+5:30)' }].map(f => (
-                  <div key={f.label} className="mb-4">
-                    <label className="text-xs text-zinc-500 mb-1 block">{f.label}</label>
-                    <input defaultValue={f.value} className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500/50" />
+                <button className="px-3 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl text-xs transition-colors">Change Photo</button>
+              </div>
+              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 space-y-4">
+                {[{ label: 'Full Name', key: 'name' }, { label: 'Email', key: 'email' }, { label: 'Role', key: 'role' }, { label: 'Institution', key: 'institution' }].map(f => (
+                  <div key={f.key}>
+                    <label className="text-xs text-zinc-500 block mb-1">{f.label}</label>
+                    <input value={profile[f.key as keyof typeof profile]} onChange={e => setProfile(p => ({ ...p, [f.key]: e.target.value }))}
+                      className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500/50 transition-colors" />
                   </div>
                 ))}
-                <button className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-medium transition-colors">Save Changes</button>
+                <div>
+                  <label className="text-xs text-zinc-500 block mb-1">Bio</label>
+                  <textarea value={profile.bio} onChange={e => setProfile(p => ({ ...p, bio: e.target.value }))}
+                    className="w-full h-20 bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white resize-none focus:outline-none focus:border-emerald-500/50" />
+                </div>
+                <button onClick={save} disabled={saving}
+                  className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-colors">
+                  {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : saved ? <CheckCircle className="w-4 h-4" /> : null}
+                  {saved ? 'Saved!' : saving ? 'Saving...' : 'Save Changes'}
+                </button>
               </div>
             </div>
           )}
 
-          {activeTab === 'apikeys' && (
-            <div className="max-w-lg space-y-4">
-              {apiKeys.map(k => (
-                <div key={k.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+          {activeTab === 'api' && (
+            <div className="max-w-2xl space-y-4">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-xs text-zinc-500">{mockKeys.length} active keys</div>
+                <button className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-medium transition-colors">
+                  <Plus className="w-3.5 h-3.5" />New Key
+                </button>
+              </div>
+              {mockKeys.map(k => (
+                <div key={k.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-zinc-700 transition-colors">
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <div className="text-sm font-semibold text-white">{k.name}</div>
-                      <div className="text-xs text-zinc-500 mt-0.5">Created {k.created} · Used {k.lastUsed}</div>
+                      <div className="font-semibold text-sm text-white">{k.name}</div>
+                      <div className="text-[10px] text-zinc-500 mt-0.5">Created {k.created} · Last used {k.lastUsed}</div>
                     </div>
-                    <button className="p-1.5 rounded-lg text-zinc-600 hover:text-red-400 hover:bg-zinc-800 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 bg-zinc-800 text-zinc-400 text-[10px] rounded-full">{k.perms}</span>
+                      <button className="p-1.5 text-zinc-600 hover:text-red-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2.5">
-                    <code className="text-xs text-zinc-300 flex-1 font-mono">
-                      {revealed[k.id] ? k.key : k.prefix + '••••••••••••••••'}
-                    </code>
-                    <button onClick={() => setRevealed(p => ({ ...p, [k.id]: !p[k.id] }))} className="text-zinc-500 hover:text-zinc-300">
-                      {revealed[k.id] ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-                    </button>
-                    <button onClick={() => copyKey(k.id, k.key)} className="text-zinc-500 hover:text-emerald-400">
+                  <div className="flex items-center gap-2 bg-zinc-800 rounded-xl px-3 py-2">
+                    <code className="text-xs text-zinc-300 font-mono flex-1">{k.key}</code>
+                    <button onClick={() => copy(k.id, k.key)} className="text-zinc-500 hover:text-white transition-colors">
                       {copied === k.id ? <CheckCircle className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                     </button>
                   </div>
                 </div>
               ))}
-              <button className="flex items-center gap-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl text-sm transition-colors">
-                <RefreshCw className="w-3.5 h-3.5" />Generate New Key
-              </button>
             </div>
           )}
 
-          {activeTab === 'sessions' && (
-            <div className="max-w-lg space-y-3">
-              {sessions.map((s, i) => (
-                <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 flex items-center justify-between">
-                  <div className="flex items-start gap-3">
-                    <Monitor className="w-4 h-4 text-zinc-500 mt-0.5" />
-                    <div>
-                      <div className="text-sm font-semibold text-white flex items-center gap-2">{s.device} {s.current && <span className="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 text-[9px] rounded-full">Current</span>}</div>
-                      <div className="text-xs text-zinc-500 mt-0.5">{s.location} · {s.ip}</div>
-                      <div className="text-[10px] text-zinc-600 mt-0.5">{s.time}</div>
-                    </div>
-                  </div>
-                  {!s.current && <button className="px-3 py-1.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg text-xs hover:bg-red-500/20 transition-colors">Revoke</button>}
+          {activeTab === 'billing' && (
+            <div className="max-w-lg space-y-4">
+              <div className="bg-gradient-to-br from-emerald-500/15 to-teal-500/5 border border-emerald-500/25 rounded-2xl p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <div><div className="text-lg font-bold text-white">Pro Plan</div><div className="text-sm text-zinc-400">$29/month · Unlimited queries</div></div>
+                  <span className="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/30">Active</span>
                 </div>
-              ))}
-            </div>
-          )}
-
-          {activeTab === 'plan' && (
-            <div className="max-w-lg space-y-4">
-              <div className="bg-gradient-to-br from-emerald-500/10 to-teal-500/5 border border-emerald-500/20 rounded-2xl p-6">
-                <div className="text-xs text-emerald-400 font-semibold uppercase tracking-widest mb-1">Current Plan</div>
-                <div className="text-3xl font-bold text-white mb-1">Pro</div>
-                <div className="text-sm text-zinc-400 mb-4">$29/month · Renews Jul 1, 2026</div>
-                {['Unlimited knowledge graphs', 'All 7 platform modules', 'GPT-4o access', 'Priority GPU compute', '50GB document storage', 'API access + webhooks'].map(f => (
-                  <div key={f} className="flex items-center gap-2 mb-2 text-sm text-zinc-300">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />{f}
-                  </div>
-                ))}
-              </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
-                <div className="text-sm font-semibold text-white mb-3">Upgrade to Enterprise</div>
-                <div className="text-xs text-zinc-500 mb-4">Custom models, SSO, dedicated infrastructure, SLA guarantees</div>
-                <button className="px-5 py-2.5 bg-white text-black rounded-xl text-sm font-medium">Contact Sales</button>
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  {[{ label: 'RAG Queries', value: '∞', sub: 'Unlimited' }, { label: 'Graphs', value: '∞', sub: 'Unlimited' }, { label: 'Storage', value: '50 GB', sub: '12.3 used' }].map(s => (
+                    <div key={s.label} className="bg-zinc-900/50 rounded-xl p-3 text-center">
+                      <div className="text-base font-bold text-white">{s.value}</div>
+                      <div className="text-[9px] text-zinc-500">{s.label}</div>
+                      <div className="text-[9px] text-emerald-400">{s.sub}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <button className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-white rounded-xl text-xs transition-colors"><ExternalLink className="w-3.5 h-3.5" />Manage Billing</button>
+                  <button className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs transition-colors">Upgrade to Teams</button>
+                </div>
               </div>
             </div>
           )}
 
-          {activeTab === 'quota' && (
-            <div className="max-w-lg space-y-4">
-              {[
-                { label: 'Document Storage', used: 12.4, total: 50, unit: 'GB', color: 'bg-blue-500' },
-                { label: 'Knowledge Graphs', used: 12, total: 100, unit: 'graphs', color: 'bg-emerald-500' },
-                { label: 'RAG Queries', used: 847, total: 5000, unit: 'queries/mo', color: 'bg-violet-500' },
-                { label: 'XAI Explanations', used: 89, total: 1000, unit: 'queries/mo', color: 'bg-amber-500' },
-                { label: 'Agent Runs', used: 23, total: 200, unit: 'runs/mo', color: 'bg-pink-500' },
-              ].map(q => (
-                <div key={q.label} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-white font-medium">{q.label}</span>
-                    <span className="text-zinc-500">{q.used} / {q.total} {q.unit}</span>
-                  </div>
-                  <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
-                    <div className={`h-full ${q.color} rounded-full transition-all`} style={{ width: `${(q.used / q.total) * 100}%` }} />
-                  </div>
-                  <div className="text-[10px] text-zinc-500 mt-1">{((q.used / q.total) * 100).toFixed(0)}% used</div>
+          {activeTab === 'activity' && (
+            <div className="max-w-lg space-y-2">
+              <div className="text-xs text-zinc-500 mb-3">Recent activity across all platform features</div>
+              {mockActivity.map((a, i) => (
+                <div key={i} className="flex items-start gap-3 p-4 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-zinc-700 transition-colors">
+                  <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${typeColor[a.type] ?? 'bg-zinc-400'}`} />
+                  <div className="flex-1"><div className="text-sm text-white">{a.action}</div><div className="text-xs text-zinc-500 mt-0.5">{a.detail}</div></div>
+                  <div className="text-xs text-zinc-600 flex-shrink-0">{a.time}</div>
                 </div>
               ))}
             </div>

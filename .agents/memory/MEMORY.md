@@ -1,0 +1,2 @@
+- [Aether API port](aether-api-port.md) — API server uses API_PORT=8080 (Replit assigns port 8080 to the api-server workflow)
+- [Aether vite proxy](aether-api-port.md) — Vite proxies /api/* to localhost:API_PORT; never use absolute localhost:8000 in frontend

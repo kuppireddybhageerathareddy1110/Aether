@@ -1,61 +1,92 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { MessageCircle, Send, RefreshCw, Bot, User, Sparkles } from 'lucide-react';
+import { api } from '@/lib/api';
+
+interface Message { role: 'user' | 'assistant'; content: string; timestamp: string; confidence?: number; }
+
+const WELCOME = 'Hi! I\'m Aether, your AI research assistant. Ask me anything about your documents, knowledge graphs, or research topics.';
 
 export default function RAGChat() {
-  const [messages, setMessages] = useState<any[]>([
-    { role: 'assistant', content: 'Hello! I can answer questions across all your documents and journal entries.' }
+  const [messages, setMessages] = useState<Message[]>([
+    { role: 'assistant', content: WELCOME, timestamp: new Date().toISOString() },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
+  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
 
-    const userMsg = { role: 'user', content: input };
+  const send = async () => {
+    if (!input.trim() || loading) return;
+    const userMsg: Message = { role: 'user', content: input, timestamp: new Date().toISOString() };
     setMessages(prev => [...prev, userMsg]);
     setInput('');
     setLoading(true);
-
-    setTimeout(() => {
-      const reply = {
-        role: 'assistant',
-        content: `Based on your documents and journal, here's what I found about "${userMsg.content}":\n\nThis topic appears in 3 journal entries and 2 uploaded papers. Key insight: relevance score was 0.91.`
-      };
-      setMessages(prev => [...prev, reply]);
-      setLoading(false);
-    }, 900);
+    try {
+      const data = await api.post<any>('/chat/message', { message: input });
+      setMessages(prev => [...prev, { role: 'assistant', content: data.reply, timestamp: data.timestamp, confidence: data.confidence }]);
+    } catch {
+      setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I couldn\'t process your message. Please try again.', timestamp: new Date().toISOString() }]);
+    } finally { setLoading(false); }
   };
 
   return (
-    <div className="flex flex-col h-screen max-w-4xl mx-auto p-8">
-      <div className="mb-6">
-        <h1 className="text-4xl font-semibold tracking-tight">RAG Chat</h1>
-        <p className="text-zinc-400">Ask anything across your entire knowledge base</p>
+    <div className="h-screen flex flex-col bg-zinc-950">
+      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4 flex items-center justify-between">
+        <div>
+          <h1 className="text-xl font-bold text-white flex items-center gap-2"><MessageCircle className="w-5 h-5 text-teal-400" />RAG Chat</h1>
+          <p className="text-xs text-zinc-500 mt-0.5">Semantic search over all your research data</p>
+        </div>
+        <div className="flex items-center gap-1.5 text-xs text-emerald-400"><span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />Aether Online</div>
       </div>
 
-      <div className="flex-1 overflow-auto bg-zinc-900 border border-zinc-800 rounded-3xl p-8 space-y-6">
-        {messages.map((m, i) => (
-          <div key={i} className={m.role === 'user' ? 'text-right' : ''}>
-            <div className={`inline-block max-w-[80%] px-6 py-4 rounded-3xl text-sm ${
-              m.role === 'user'
-                ? 'bg-white text-black'
-                : 'bg-zinc-800'
-            }`}>
-              {m.content}
+      <div className="flex-1 overflow-auto p-4 space-y-4">
+        {messages.map((msg, i) => (
+          <div key={i} className={`flex gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            {msg.role === 'assistant' && (
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center flex-shrink-0 mt-1">
+                <Bot className="w-4 h-4 text-white" />
+              </div>
+            )}
+            <div className={`max-w-xl rounded-2xl px-4 py-3 ${msg.role === 'user' ? 'bg-zinc-800 border border-zinc-700' : 'bg-zinc-900 border border-zinc-800'}`}>
+              <div className="text-sm text-zinc-200 leading-relaxed whitespace-pre-wrap">{msg.content}</div>
+              <div className="flex items-center justify-between mt-2 gap-2">
+                <div className="text-[10px] text-zinc-600">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                {msg.confidence && <div className="text-[10px] text-emerald-400">Confidence: {(msg.confidence * 100).toFixed(0)}%</div>}
+              </div>
             </div>
+            {msg.role === 'user' && (
+              <div className="w-8 h-8 rounded-xl bg-zinc-700 flex items-center justify-center flex-shrink-0 mt-1">
+                <User className="w-4 h-4 text-zinc-300" />
+              </div>
+            )}
           </div>
         ))}
-        {loading && <div className="text-zinc-500 text-sm">Thinking...</div>}
+        {loading && (
+          <div className="flex gap-3 justify-start">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center flex-shrink-0">
+              <Bot className="w-4 h-4 text-white" />
+            </div>
+            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-3">
+              <div className="flex items-center gap-1.5 text-zinc-500 text-sm"><Sparkles className="w-4 h-4 animate-pulse" />Thinking...</div>
+            </div>
+          </div>
+        )}
+        <div ref={bottomRef} />
       </div>
 
-      <div className="flex gap-3 mt-6">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-          className="flex-1 bg-zinc-900 border border-zinc-800 rounded-2xl px-6 py-4"
-          placeholder="Ask about your research..."
-        />
-        <button onClick={sendMessage} className="px-8 py-4 bg-white text-black rounded-2xl font-medium">Send</button>
+      <div className="border-t border-zinc-800 p-4">
+        <div className="max-w-3xl mx-auto flex gap-3">
+          <input value={input} onChange={e => setInput(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } }}
+            className="flex-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-teal-500/50"
+            placeholder="Ask about your research data... (Enter to send)" disabled={loading} />
+          <button onClick={send} disabled={loading || !input.trim()}
+            className="p-3 bg-teal-600 hover:bg-teal-500 disabled:opacity-40 text-white rounded-2xl transition-colors">
+            {loading ? <RefreshCw className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
+          </button>
+        </div>
+        <div className="text-center text-[10px] text-zinc-600 mt-2">Powered by Aether RAG Pipeline · Real-time answers from your knowledge base</div>
       </div>
     </div>
   );
