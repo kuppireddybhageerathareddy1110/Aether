@@ -47,6 +47,7 @@ function Router() {
       {/* New feature routes */}
       <Route path="/agentic-rag" component={AgenticRAG} />
       <Route path="/latex-editor" component={LaTeXEditor} />
+      <Route path="/editor" component={LaTeXEditor} />
       <Route path="/xai-dashboard" component={XAIDashboard} />
       <Route path="/mood-journal" component={MoodJournal} />
       <Route path="/notifications" component={Notifications} />
