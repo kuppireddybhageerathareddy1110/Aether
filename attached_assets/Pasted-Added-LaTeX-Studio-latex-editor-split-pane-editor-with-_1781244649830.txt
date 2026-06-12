@@ -204,7 +204,7 @@ git commit -m "Initial commit"
 
 
 
-git push https://kuppireddybhageerathareddy1110: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@github.com/kuppireddybhageerathareddy1110/Aether.git main
+git push https://kuppireddybhageerathareddy1110:GITHUB_TOKEN_REDACTED@github.com/kuppireddybhageerathareddy1110/Aether.git main
 
 
 Show more
@@ -235,7 +235,7 @@ git commit -m "Initial commit"
 
 
 
-git push https://kuppireddybhageerathareddy1110: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@github.com/kuppireddybhageerathareddy1110/Aether.git main
+git push https://kuppireddybhageerathareddy1110:GITHUB_TOKEN_REDACTED@github.com/kuppireddybhageerathareddy1110/Aether.git main
 
 
 Show less
