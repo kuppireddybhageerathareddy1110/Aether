@@ -78,8 +78,8 @@ export default function AgenticRAG() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4 flex items-center justify-between">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4 flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold text-white flex items-center gap-2"><Network className="w-5 h-5 text-violet-400" />Agentic RAG</h1>
           <p className="text-xs text-zinc-500 mt-0.5">Multi-agent retrieval-augmented generation pipeline</p>
@@ -98,7 +98,7 @@ export default function AgenticRAG() {
         {activeTab === 'run' && (
           <div className="max-w-5xl mx-auto space-y-5">
             {/* Pipeline visualization */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+            <div className="glass rounded-2xl p-5">
               <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4">Pipeline Agents</div>
               <div className="flex items-center gap-1 overflow-x-auto pb-2">
                 {agentDefs.map((agent, i) => (
@@ -115,11 +115,11 @@ export default function AgenticRAG() {
             </div>
 
             {/* Query */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+            <div className="glass rounded-2xl p-5">
               <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-3">Query</div>
               <textarea value={query} onChange={e => setQuery(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) run(); }}
-                className="w-full h-20 bg-zinc-950 border border-zinc-700 rounded-xl p-4 text-sm text-white placeholder:text-zinc-600 resize-none focus:outline-none focus:border-violet-500/50"
+                className="w-full h-20 bg-transparent border border-zinc-700 rounded-xl p-4 text-sm text-white placeholder:text-zinc-600 resize-none focus:outline-none focus:border-violet-500/50"
                 placeholder="What are the key findings about mood-aware graph neural networks? (Ctrl+Enter to run)" />
               {error && <div className="mt-2 text-xs text-red-400 bg-red-400/10 px-3 py-2 rounded-lg">{error}</div>}
               <button onClick={run} disabled={running || !query.trim()}
@@ -131,11 +131,11 @@ export default function AgenticRAG() {
 
             {/* Trace */}
             {trace.length > 0 && (
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+              <div className="glass rounded-2xl p-5">
                 <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4">Execution Trace</div>
                 <div className="space-y-2">
                   {trace.map((step, i) => (
-                    <div key={i} className={`flex items-start gap-3 p-3 rounded-xl border transition-all ${step.status === 'running' ? 'border-violet-500/40 bg-violet-500/5' : step.status === 'done' ? 'border-zinc-700 bg-zinc-800/40' : 'border-zinc-800'}`}>
+                    <div key={i} className={`flex items-start gap-3 p-3 rounded-xl border transition-all ${step.status === 'running' ? 'border-violet-500/40 bg-violet-500/5' : step.status === 'done' ? 'border-zinc-700 bg-white/[0.06]/40' : 'border-white/[0.07]'}`}>
                       <div className={`mt-0.5 flex-shrink-0 ${step.status === 'running' ? 'text-violet-400' : step.status === 'done' ? 'text-emerald-400' : 'text-zinc-600'}`}>
                         {step.status === 'running' ? <RefreshCw className="w-4 h-4 animate-spin" /> : step.status === 'done' ? <CheckCircle className="w-4 h-4" /> : <Clock className="w-4 h-4" />}
                       </div>
@@ -165,7 +165,7 @@ export default function AgenticRAG() {
 
         {activeTab === 'config' && (
           <div className="max-w-2xl mx-auto space-y-4">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+            <div className="glass rounded-2xl p-5">
               <div className="text-sm font-semibold text-white mb-4">Pipeline Configuration</div>
               {[
                 { label: 'Top-K Retrieval', key: 'topK', value: ragConfig.topK, min: 1, max: 50, step: 1 },
@@ -182,7 +182,7 @@ export default function AgenticRAG() {
               ))}
               <div className="mt-2">
                 <div className="text-xs text-zinc-400 mb-1.5">LLM Model</div>
-                <select className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-300">
+                <select className="w-full bg-white/[0.06] border border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-300">
                   <option>GPT-4o</option><option>GPT-4 Turbo</option><option>Claude 3.5 Sonnet</option><option>Llama 3.1 70B</option>
                 </select>
               </div>
@@ -206,7 +206,7 @@ export default function AgenticRAG() {
             ) : history.length === 0 ? (
               <div className="text-center py-16 text-zinc-600 text-sm">No queries yet — run your first pipeline above</div>
             ) : history.map((run, i) => (
-              <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 hover:border-zinc-700 transition-colors">
+              <div key={i} className="glass rounded-xl p-4 hover:border-zinc-700 transition-colors">
                 <div className="font-medium text-sm text-white mb-2 line-clamp-2">{run.query}</div>
                 <div className="flex gap-4 text-xs text-zinc-500 mb-2">
                   <span><span className="text-zinc-300">{run.chunksUsed}</span> chunks</span>

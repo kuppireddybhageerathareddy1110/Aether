@@ -14,7 +14,7 @@ export default function ResearchTimeline() {
 
       <div className="space-y-4">
         {timeline.map((item, i) => (
-          <div key={i} className="flex gap-6 bg-zinc-900 border border-zinc-800 rounded-3xl p-7">
+          <div key={i} className="flex gap-6 glass rounded-3xl p-7">
             <div className="w-20 text-xs text-zinc-500 font-mono pt-1">{item.date}</div>
             <div className="flex-1">
               <div className="font-medium">{item.title}</div>
@@ -25,7 +25,7 @@ export default function ResearchTimeline() {
                 {item.type === 'upload' && <span>{item.docs} documents</span>}
               </div>
             </div>
-            <div className="text-xs px-4 py-1 rounded-full bg-zinc-800 h-fit">{item.type}</div>
+            <div className="text-xs px-4 py-1 rounded-full bg-white/[0.06] h-fit">{item.type}</div>
           </div>
         ))}
       </div>

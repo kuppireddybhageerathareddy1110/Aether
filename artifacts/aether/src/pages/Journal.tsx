@@ -32,8 +32,8 @@ export default function ResearchJournal() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4 flex items-center justify-between">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4 flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold text-white flex items-center gap-2"><BookOpen className="w-5 h-5 text-pink-400" />Research Journal</h1>
           <p className="text-xs text-zinc-500 mt-0.5">Quick journal entry — for full mood tracking, use the <Link href="/mood-journal" className="text-pink-400 hover:underline">Mood Journal</Link></p>
@@ -45,10 +45,10 @@ export default function ResearchJournal() {
 
       <div className="flex-1 overflow-auto p-6">
         <div className="max-w-2xl mx-auto space-y-5">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+          <div className="glass rounded-2xl p-5">
             <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-3">New Entry</div>
             <textarea value={entry} onChange={e => setEntry(e.target.value)}
-              className="w-full h-28 bg-zinc-950 border border-zinc-700 rounded-xl p-4 text-sm text-white placeholder:text-zinc-600 resize-none focus:outline-none focus:border-pink-500/50"
+              className="w-full h-28 bg-transparent border border-zinc-700 rounded-xl p-4 text-sm text-white placeholder:text-zinc-600 resize-none focus:outline-none focus:border-pink-500/50"
               placeholder="Write your research thoughts here..." />
             <button onClick={save} disabled={saving || !entry.trim()}
               className="mt-3 flex items-center gap-1.5 px-5 py-2.5 bg-pink-600 hover:bg-pink-500 disabled:opacity-40 text-white rounded-xl text-sm font-medium transition-colors">
@@ -58,7 +58,7 @@ export default function ResearchJournal() {
           </div>
 
           {entries.map(e => (
-            <div key={e.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-zinc-700 transition-colors">
+            <div key={e.id} className="glass rounded-2xl p-5 hover:border-zinc-700 transition-colors">
               <div className="flex items-start justify-between mb-2">
                 <div className="text-xs text-zinc-500">{new Date(e.createdAt).toLocaleString()} · Mood: {e.moodLabel}</div>
                 <button onClick={() => remove(e.id)} className="p-1 text-zinc-600 hover:text-red-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>

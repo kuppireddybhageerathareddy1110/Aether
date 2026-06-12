@@ -38,8 +38,8 @@ export default function UniversalSearch() {
   const filtered = results.filter(r => filter === 'all' || r.type === filter);
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4">
         <h1 className="text-xl font-bold text-white flex items-center gap-2"><SearchIcon className="w-5 h-5 text-blue-400" />Universal Search</h1>
         <p className="text-xs text-zinc-500 mt-0.5">Semantic search across journals, documents, graphs, and RAG history</p>
       </div>
@@ -48,7 +48,7 @@ export default function UniversalSearch() {
         <div className="flex gap-3 mb-4">
           <input value={query} onChange={e => setQuery(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && search()}
-            className="flex-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500/50"
+            className="flex-1 glass border border-zinc-700 rounded-2xl px-5 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500/50"
             placeholder="Search across all your research data..." />
           <button onClick={search} disabled={loading || !query.trim()}
             className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white rounded-2xl text-sm font-medium transition-colors">
@@ -82,7 +82,7 @@ export default function UniversalSearch() {
               const Icon = typeIcon[r.type] ?? SearchIcon;
               const colorClass = typeColor[r.type] ?? 'text-zinc-400 bg-zinc-400/10';
               return (
-                <div key={i} className="flex gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-2xl hover:border-zinc-700 transition-colors cursor-pointer">
+                <div key={i} className="flex gap-4 p-4 glass rounded-2xl hover:border-zinc-700 transition-colors cursor-pointer">
                   <div className={`p-2.5 rounded-xl flex-shrink-0 ${colorClass}`}><Icon className="w-4 h-4" /></div>
                   <div className="flex-1 min-w-0">
                     {r.name && <div className="text-xs font-semibold text-zinc-400 mb-0.5">{r.name}</div>}

@@ -46,8 +46,8 @@ export default function Notifications() {
   const unreadCount = notifs.filter(n => !n.read).length;
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4 flex items-center justify-between">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4 flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold text-white flex items-center gap-2">
             <Bell className="w-5 h-5 text-blue-400" />Notifications
@@ -59,13 +59,13 @@ export default function Notifications() {
           <button onClick={load} className="p-2 text-zinc-500 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors">
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
-          <button onClick={markAllRead} className="flex items-center gap-1.5 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl text-xs transition-colors">
+          <button onClick={markAllRead} className="flex items-center gap-1.5 px-4 py-2 glass-btn text-zinc-300 rounded-xl text-xs transition-colors">
             <CheckCheck className="w-3.5 h-3.5" />Mark all read
           </button>
         </div>
       </div>
 
-      <div className="border-b border-zinc-800 px-6">
+      <div className="border-b border-white/[0.07] px-6">
         <div className="flex gap-1 py-2 flex-wrap">
           {[['all', 'All'], ['unread', `Unread (${unreadCount})`], ['graph', 'Graph'], ['rag', 'RAG'], ['agent', 'Agents'], ['xai', 'XAI'], ['journal', 'Journal'], ['system', 'System']].map(([k, label]) => (
             <button key={k} onClick={() => setFilter(k as any)}
@@ -96,7 +96,7 @@ export default function Notifications() {
               return `${Math.floor(diff / 86400000)}d ago`;
             })();
             return (
-              <div key={notif.id} className={`flex items-start gap-4 p-4 rounded-2xl border transition-all ${!notif.read ? 'bg-zinc-900 border-zinc-700' : 'bg-zinc-900/40 border-zinc-800/50'}`}>
+              <div key={notif.id} className={`flex items-start gap-4 p-4 rounded-2xl border transition-all ${!notif.read ? 'bg-zinc-900 border-zinc-700' : 'bg-zinc-900/40 border-white/[0.07]/50'}`}>
                 <div className={`p-2.5 rounded-xl flex-shrink-0 ${colorClass}`}><Icon className="w-4 h-4" /></div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">

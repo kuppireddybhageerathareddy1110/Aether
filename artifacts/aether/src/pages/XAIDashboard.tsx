@@ -44,15 +44,15 @@ export default function XAIDashboard() {
   const polyPoints = radarValues.map((v, i) => getPoint(i, v).join(',')).join(' ');
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4">
         <h1 className="text-xl font-bold text-white flex items-center gap-2">
           <FlaskConical className="w-5 h-5 text-amber-400" />XAI Lab
         </h1>
         <p className="text-xs text-zinc-500 mt-0.5">SHAP analysis, attention inspection, and explanation quality</p>
       </div>
 
-      <div className="border-b border-zinc-800 px-6">
+      <div className="border-b border-white/[0.07] px-6">
         <div className="flex gap-1 py-2">
           {[['shap', 'SHAP Features'], ['attention', 'Attention Heatmap'], ['trace', 'Decision Trace'], ['quality', 'Quality Radar']] .map(([k, label]) => (
             <button key={k} onClick={() => setActiveTab(k as any)}
@@ -66,7 +66,7 @@ export default function XAIDashboard() {
       <div className="flex-1 overflow-auto p-6">
         {activeTab === 'shap' && (
           <div className="max-w-3xl mx-auto space-y-4">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+            <div className="glass rounded-2xl p-5">
               <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4">SHAP Feature Importance</div>
               <div className="space-y-3">
                 {shapFeatures.map(f => (
@@ -77,7 +77,7 @@ export default function XAIDashboard() {
                         {f.positive ? '+' : ''}{f.value.toFixed(2)}
                       </span>
                     </div>
-                    <div className="h-5 bg-zinc-800 rounded-full overflow-hidden flex items-center">
+                    <div className="h-5 bg-white/[0.06] rounded-full overflow-hidden flex items-center">
                       {f.positive ? (
                         <div style={{ width: `${Math.abs(f.value) / 0.5 * 100}%`, marginLeft: '50%' }}
                           className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full" />
@@ -95,15 +95,15 @@ export default function XAIDashboard() {
               </div>
             </div>
             <div className="grid grid-cols-3 gap-4">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
+              <div className="glass rounded-xl p-4 text-center">
                 <div className="text-2xl font-bold text-emerald-400">0.94</div>
                 <div className="text-xs text-zinc-500 mt-1">Model Confidence</div>
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
+              <div className="glass rounded-xl p-4 text-center">
                 <div className="text-2xl font-bold text-amber-400">8</div>
                 <div className="text-xs text-zinc-500 mt-1">Features Analyzed</div>
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
+              <div className="glass rounded-xl p-4 text-center">
                 <div className="text-2xl font-bold text-violet-400">0.42</div>
                 <div className="text-xs text-zinc-500 mt-1">Top Feature SHAP</div>
               </div>
@@ -113,7 +113,7 @@ export default function XAIDashboard() {
 
         {activeTab === 'attention' && (
           <div className="max-w-3xl mx-auto space-y-4">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+            <div className="glass rounded-2xl p-5">
               <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-1">Self-Attention Heatmap</div>
               <p className="text-xs text-zinc-600 mb-4">Click any token to inspect its attention profile</p>
               <div className="flex flex-wrap gap-2 mb-4">
@@ -173,7 +173,7 @@ export default function XAIDashboard() {
 
         {activeTab === 'trace' && (
           <div className="max-w-2xl mx-auto space-y-3">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+            <div className="glass rounded-2xl p-5">
               <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4">Decision Trace</div>
               <div className="space-y-3">
                 {decisionTrace.map((step, i) => (
@@ -187,7 +187,7 @@ export default function XAIDashboard() {
                         <span className="text-sm font-semibold text-white">{step.step}</span>
                         <span className="text-xs text-emerald-400 font-mono">{(step.confidence * 100).toFixed(0)}%</span>
                       </div>
-                      <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden mb-1.5">
+                      <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden mb-1.5">
                         <div className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-all"
                           style={{ width: `${step.confidence * 100}%` }} />
                       </div>
@@ -206,7 +206,7 @@ export default function XAIDashboard() {
 
         {activeTab === 'quality' && (
           <div className="max-w-2xl mx-auto space-y-4">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+            <div className="glass rounded-2xl p-5">
               <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4">Explanation Quality Radar</div>
               <div className="flex justify-center">
                 <svg width="240" height="240" viewBox="0 0 240 240">
@@ -239,14 +239,14 @@ export default function XAIDashboard() {
                 ))}
               </div>
             </div>
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+            <div className="glass rounded-xl p-4">
               <div className="text-xs font-semibold text-zinc-400 mb-3">Anomaly Detection</div>
               {[
                 { name: 'Feature Distribution Shift', severity: 'low', score: 0.12 },
                 { name: 'Attention Pattern Anomaly', severity: 'medium', score: 0.34 },
                 { name: 'Prediction Confidence Drop', severity: 'high', score: 0.71 },
               ].map(a => (
-                <div key={a.name} className="flex items-center justify-between py-2 border-b border-zinc-800 last:border-0">
+                <div key={a.name} className="flex items-center justify-between py-2 border-b border-white/[0.07] last:border-0">
                   <div className="flex items-center gap-2">
                     <AlertTriangle className={`w-3.5 h-3.5 ${a.severity === 'high' ? 'text-red-400' : a.severity === 'medium' ? 'text-amber-400' : 'text-green-400'}`} />
                     <span className="text-xs text-zinc-300">{a.name}</span>

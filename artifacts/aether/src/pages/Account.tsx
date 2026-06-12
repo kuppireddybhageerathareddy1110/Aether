@@ -45,14 +45,14 @@ export default function Account() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4">
         <h1 className="text-xl font-bold text-white flex items-center gap-2"><User className="w-5 h-5 text-zinc-400" />Account</h1>
         <p className="text-xs text-zinc-500 mt-0.5">Manage your profile, API keys, and usage</p>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
-        <div className="w-44 border-r border-zinc-800 bg-zinc-900/30 p-3 space-y-1">
+        <div className="w-44 border-r border-white/[0.07] bg-zinc-900/30 p-3 space-y-1">
           {TABS.map(tab => (
             <button key={tab.key} onClick={() => setActiveTab(tab.key)}
               className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition-all text-left ${activeTab === tab.key ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-white hover:bg-zinc-800/50'}`}>
@@ -64,7 +64,7 @@ export default function Account() {
         <div className="flex-1 overflow-auto p-6">
           {activeTab === 'profile' && (
             <div className="max-w-lg space-y-5">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 flex items-center gap-5">
+              <div className="glass rounded-2xl p-5 flex items-center gap-5">
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-2xl font-bold text-white flex-shrink-0">K</div>
                 <div className="flex-1">
                   <div className="text-base font-bold text-white">{profile.name}</div>
@@ -74,20 +74,20 @@ export default function Account() {
                     <span className="px-2 py-0.5 bg-zinc-700 text-zinc-400 text-[10px] rounded-full">{profile.role}</span>
                   </div>
                 </div>
-                <button className="px-3 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-xl text-xs transition-colors">Change Photo</button>
+                <button className="px-3 py-2 glass-btn text-zinc-300 rounded-xl text-xs transition-colors">Change Photo</button>
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 space-y-4">
+              <div className="glass rounded-2xl p-5 space-y-4">
                 {[{ label: 'Full Name', key: 'name' }, { label: 'Email', key: 'email' }, { label: 'Role', key: 'role' }, { label: 'Institution', key: 'institution' }].map(f => (
                   <div key={f.key}>
                     <label className="text-xs text-zinc-500 block mb-1">{f.label}</label>
                     <input value={profile[f.key as keyof typeof profile]} onChange={e => setProfile(p => ({ ...p, [f.key]: e.target.value }))}
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500/50 transition-colors" />
+                      className="w-full bg-white/[0.06] border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500/50 transition-colors" />
                   </div>
                 ))}
                 <div>
                   <label className="text-xs text-zinc-500 block mb-1">Bio</label>
                   <textarea value={profile.bio} onChange={e => setProfile(p => ({ ...p, bio: e.target.value }))}
-                    className="w-full h-20 bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white resize-none focus:outline-none focus:border-emerald-500/50" />
+                    className="w-full h-20 bg-white/[0.06] border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white resize-none focus:outline-none focus:border-emerald-500/50" />
                 </div>
                 <button onClick={save} disabled={saving}
                   className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-colors">
@@ -107,18 +107,18 @@ export default function Account() {
                 </button>
               </div>
               {mockKeys.map(k => (
-                <div key={k.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-zinc-700 transition-colors">
+                <div key={k.id} className="glass rounded-2xl p-5 hover:border-zinc-700 transition-colors">
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <div className="font-semibold text-sm text-white">{k.name}</div>
                       <div className="text-[10px] text-zinc-500 mt-0.5">Created {k.created} · Last used {k.lastUsed}</div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 bg-zinc-800 text-zinc-400 text-[10px] rounded-full">{k.perms}</span>
+                      <span className="px-2 py-0.5 bg-white/[0.06] text-zinc-400 text-[10px] rounded-full">{k.perms}</span>
                       <button className="p-1.5 text-zinc-600 hover:text-red-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 bg-zinc-800 rounded-xl px-3 py-2">
+                  <div className="flex items-center gap-2 bg-white/[0.06] rounded-xl px-3 py-2">
                     <code className="text-xs text-zinc-300 font-mono flex-1">{k.key}</code>
                     <button onClick={() => copy(k.id, k.key)} className="text-zinc-500 hover:text-white transition-colors">
                       {copied === k.id ? <CheckCircle className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
@@ -157,7 +157,7 @@ export default function Account() {
             <div className="max-w-lg space-y-2">
               <div className="text-xs text-zinc-500 mb-3">Recent activity across all platform features</div>
               {mockActivity.map((a, i) => (
-                <div key={i} className="flex items-start gap-3 p-4 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-zinc-700 transition-colors">
+                <div key={i} className="flex items-start gap-3 p-4 glass rounded-xl hover:border-zinc-700 transition-colors">
                   <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${typeColor[a.type] ?? 'bg-zinc-400'}`} />
                   <div className="flex-1"><div className="text-sm text-white">{a.action}</div><div className="text-xs text-zinc-500 mt-0.5">{a.detail}</div></div>
                   <div className="text-xs text-zinc-600 flex-shrink-0">{a.time}</div>

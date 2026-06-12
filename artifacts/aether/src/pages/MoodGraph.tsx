@@ -23,14 +23,14 @@ export default function MoodGraphCorrelation() {
 
       {data && (
         <div className="space-y-6">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-10">
+          <div className="glass rounded-3xl p-10">
             <div className="text-emerald-400 text-xs mb-2">CORRELATION STRENGTH</div>
             <div className="text-7xl font-semibold tracking-tighter">{data.correlation}</div>
           </div>
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-10 text-2xl leading-tight">{data.insight}</div>
+          <div className="glass rounded-3xl p-10 text-2xl leading-tight">{data.insight}</div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8"><div className="text-xs text-zinc-500">TOP MOOD</div><div className="text-3xl mt-2">{data.topMood}</div></div>
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8"><div className="text-xs text-zinc-500">TOP GRAPH FEATURE</div><div className="text-3xl mt-2">{data.topGraphFeature}</div></div>
+            <div className="glass rounded-3xl p-8"><div className="text-xs text-zinc-500">TOP MOOD</div><div className="text-3xl mt-2">{data.topMood}</div></div>
+            <div className="glass rounded-3xl p-8"><div className="text-xs text-zinc-500">TOP GRAPH FEATURE</div><div className="text-3xl mt-2">{data.topGraphFeature}</div></div>
           </div>
           <div className="bg-emerald-500/5 border border-emerald-900 rounded-3xl p-8">{data.recommendation}</div>
           <div className="text-xs text-zinc-400 px-2">{data.xai}</div>

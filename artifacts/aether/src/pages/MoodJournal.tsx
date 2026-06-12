@@ -64,13 +64,13 @@ export default function MoodJournal() {
   const weekEntries = entries.slice(0, 7).reverse();
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4">
         <h1 className="text-xl font-bold text-white flex items-center gap-2"><TrendingUp className="w-5 h-5 text-pink-400" />Mood Journal</h1>
         <p className="text-xs text-zinc-500 mt-0.5">AI-powered mood tracking, sentiment analysis, and research correlation</p>
       </div>
 
-      <div className="border-b border-zinc-800 px-6">
+      <div className="border-b border-white/[0.07] px-6">
         <div className="flex gap-1 py-2">
           {[['write', 'Write Entry'], ['history', 'Past Entries'], ['trends', '7-Day Trends'], ['recommendations', 'Recommendations']].map(([k, label]) => (
             <button key={k} onClick={() => setActiveTab(k as any)}
@@ -84,7 +84,7 @@ export default function MoodJournal() {
       <div className="flex-1 overflow-auto p-6">
         {activeTab === 'write' && (
           <div className="max-w-2xl mx-auto space-y-5">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+            <div className="glass rounded-2xl p-5">
               <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-3">How are you feeling? (1–10)</div>
               <div className="grid grid-cols-10 gap-1.5">
                 {moods.map(m => (
@@ -98,7 +98,7 @@ export default function MoodJournal() {
               {moodObj && <div className="mt-3 text-center text-sm font-semibold" style={{ color: selectedMood! >= 7 ? '#34d399' : selectedMood! >= 5 ? '#fbbf24' : '#f87171' }}>{moodObj.emoji} {moodObj.label}</div>}
             </div>
 
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+            <div className="glass rounded-2xl p-5">
               <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-3 flex items-center gap-1.5"><Tag className="w-3.5 h-3.5" />Select Tags</div>
               <div className="flex flex-wrap gap-2">
                 {tags.map(tag => (
@@ -110,10 +110,10 @@ export default function MoodJournal() {
               </div>
             </div>
 
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+            <div className="glass rounded-2xl p-5">
               <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-3">Journal Entry</div>
               <textarea value={text} onChange={e => setText(e.target.value)}
-                className="w-full h-28 bg-zinc-950 border border-zinc-700 rounded-xl p-4 text-sm text-white placeholder:text-zinc-600 resize-none focus:outline-none focus:border-pink-500/50"
+                className="w-full h-28 bg-transparent border border-zinc-700 rounded-xl p-4 text-sm text-white placeholder:text-zinc-600 resize-none focus:outline-none focus:border-pink-500/50"
                 placeholder="Write about your research session today..." />
               {saveMsg && <div className={`mt-2 text-xs px-3 py-2 rounded-lg ${saveMsg.includes('🎉') ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>{saveMsg}</div>}
               <div className="flex gap-3 mt-3">
@@ -158,7 +158,7 @@ export default function MoodJournal() {
                 {entries.map(entry => {
                   const mood = moods.find(m => m.score === entry.moodScore);
                   return (
-                    <div key={entry.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-zinc-700 transition-colors">
+                    <div key={entry.id} className="glass rounded-2xl p-5 hover:border-zinc-700 transition-colors">
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-center gap-3">
                           <span className="text-2xl">{mood?.emoji}</span>
@@ -179,7 +179,7 @@ export default function MoodJournal() {
                         <div className="flex items-center justify-between">
                           <div>
                             <div className="text-[10px] text-zinc-500 mb-1">Sentiment</div>
-                            <div className="w-32 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                            <div className="w-32 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
                               <div className="h-full bg-gradient-to-r from-pink-500 to-rose-400 rounded-full" style={{ width: `${(entry.sentiment ?? 0) * 100}%` }} />
                             </div>
                           </div>
@@ -195,7 +195,7 @@ export default function MoodJournal() {
 
         {activeTab === 'trends' && (
           <div className="max-w-2xl mx-auto space-y-4">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+            <div className="glass rounded-2xl p-5">
               <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4">Recent Entries — Mood · Energy · Focus</div>
               {weekEntries.length === 0 ? (
                 <div className="text-center py-8 text-zinc-600 text-sm">Save journal entries to see trends</div>
@@ -226,7 +226,7 @@ export default function MoodJournal() {
                   { label: 'Total Entries', value: String(entries.length), color: 'text-emerald-400' },
                   { label: 'Avg Sentiment', value: (entries.reduce((s, e) => s + (e.sentiment ?? 0.5), 0) / entries.length).toFixed(2), color: 'text-amber-400' },
                 ].map(s => (
-                  <div key={s.label} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
+                  <div key={s.label} className="glass rounded-xl p-4 text-center">
                     <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
                     <div className="text-xs text-zinc-500 mt-0.5">{s.label}</div>
                   </div>
@@ -244,7 +244,7 @@ export default function MoodJournal() {
               { time: 'Afternoon (2–4pm)', icon: '☀️', rec: 'Moderate energy period. Good for writing, journaling, and QA generation.', conf: 0.85 },
               { time: 'Evening (7–9pm)', icon: '🌙', rec: 'Creative energy peak. Best time for LaTeX writing and paper generation.', conf: 0.78 },
             ].map(r => (
-              <div key={r.time} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+              <div key={r.time} className="glass rounded-2xl p-5">
                 <div className="flex items-center gap-3 mb-2"><span className="text-2xl">{r.icon}</span>
                   <div><div className="text-sm font-semibold text-white">{r.time}</div><div className="text-[10px] text-zinc-500">Confidence: <span className="text-emerald-400">{(r.conf * 100).toFixed(0)}%</span></div></div>
                 </div>

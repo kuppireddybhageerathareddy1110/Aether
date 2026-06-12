@@ -46,8 +46,8 @@ export default function Projects() {
   const statusColor: Record<string, string> = { active: 'bg-emerald-400', archived: 'bg-zinc-500', paused: 'bg-amber-400' };
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4 flex items-center justify-between">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4 flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold text-white flex items-center gap-2"><FolderOpen className="w-5 h-5 text-orange-400" />Projects</h1>
           <p className="text-xs text-zinc-500 mt-0.5">Organize your research into focused projects</p>
@@ -71,12 +71,12 @@ export default function Projects() {
                 <div>
                   <label className="text-xs text-zinc-500 block mb-1">Project Name *</label>
                   <input value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Knowledge Graph Study"
-                    className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500/50" />
+                    className="w-full bg-white/[0.06] border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500/50" />
                 </div>
                 <div>
                   <label className="text-xs text-zinc-500 block mb-1">Description</label>
                   <textarea value={desc} onChange={e => setDesc(e.target.value)} placeholder="Brief description..."
-                    className="w-full h-16 bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white resize-none focus:outline-none focus:border-orange-500/50" />
+                    className="w-full h-16 bg-white/[0.06] border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white resize-none focus:outline-none focus:border-orange-500/50" />
                 </div>
                 <div className="flex gap-2">
                   <button onClick={create} disabled={saving || !name.trim()}
@@ -102,7 +102,7 @@ export default function Projects() {
             </div>
           ) : (
             projects.map(p => (
-              <div key={p.id} className={`bg-zinc-900 border rounded-2xl p-5 transition-all ${p.status === 'archived' ? 'border-zinc-800 opacity-60' : 'border-zinc-800 hover:border-zinc-700'}`}>
+              <div key={p.id} className={`bg-zinc-900 border rounded-2xl p-5 transition-all ${p.status === 'archived' ? 'border-white/[0.07] opacity-60' : 'border-white/[0.07] hover:border-zinc-700'}`}>
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-3">
                     <FolderOpen className="w-5 h-5 text-orange-400 flex-shrink-0" />

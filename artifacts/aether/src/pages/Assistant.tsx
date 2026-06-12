@@ -30,7 +30,7 @@ export default function AIAssistant() {
         <p className="text-zinc-400">Your intelligent research companion</p>
       </div>
 
-      <div className="flex-1 overflow-auto bg-zinc-900 border border-zinc-800 rounded-3xl p-8 space-y-6">
+      <div className="flex-1 overflow-auto glass rounded-3xl p-8 space-y-6">
         {messages.map((m, i) => (
           <div key={i} className={m.role === 'user' ? 'text-right' : ''}>
             <div className={`inline-block max-w-[80%] px-6 py-4 rounded-3xl text-sm leading-relaxed ${
@@ -48,7 +48,7 @@ export default function AIAssistant() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && send()}
-          className="flex-1 bg-zinc-900 border border-zinc-800 rounded-2xl px-6 py-4"
+          className="flex-1 glass rounded-2xl px-6 py-4"
           placeholder="Ask your AI assistant..."
         />
         <button onClick={send} className="px-8 py-4 bg-white text-black rounded-2xl font-medium">Send</button>

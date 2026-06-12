@@ -43,8 +43,8 @@ export default function PDFUpload() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4">
         <h1 className="text-xl font-bold text-white flex items-center gap-2"><UploadIcon className="w-5 h-5 text-blue-400" />Document Upload</h1>
         <p className="text-xs text-zinc-500 mt-0.5">Upload PDFs and documents to index them into the vector store</p>
       </div>
@@ -113,7 +113,7 @@ export default function PDFUpload() {
                   {graphGenerating ? 'Generating Knowledge Graph...' : 'Generate Knowledge Graph'}
                 </button>
               ) : (
-                <div className="flex items-center gap-2 px-4 py-2.5 bg-zinc-800 rounded-xl text-sm text-emerald-400">
+                <div className="flex items-center gap-2 px-4 py-2.5 bg-white/[0.06] rounded-xl text-sm text-emerald-400">
                   <CheckCircle className="w-4 h-4" />
                   Graph generated: {graphResult.nodeCount} nodes, {graphResult.edgeCount} edges
                 </div>

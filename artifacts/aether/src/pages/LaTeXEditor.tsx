@@ -104,9 +104,9 @@ export default function LaTeXEditorPage() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
+    <div className="h-screen flex flex-col bg-transparent">
       {/* Toolbar */}
-      <div className="border-b border-zinc-800 bg-zinc-900 px-4 py-2.5 flex items-center justify-between gap-4">
+      <div className="border-b border-white/[0.07] glass px-4 py-2.5 flex items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <Code2 className="w-5 h-5 text-blue-400" />
           <span className="text-sm font-semibold text-white">LaTeX Studio</span>
@@ -142,8 +142,8 @@ export default function LaTeXEditorPage() {
       {/* Editor + Preview */}
       <div className="flex flex-1 overflow-hidden">
         {/* Editor pane */}
-        <div className="w-1/2 border-r border-zinc-800 flex flex-col">
-          <div className="px-3 py-1.5 bg-zinc-900 border-b border-zinc-800 text-[10px] text-zinc-500">EDITOR</div>
+        <div className="w-1/2 border-r border-white/[0.07] flex flex-col">
+          <div className="px-3 py-1.5 glass border-b border-white/[0.07] text-[10px] text-zinc-500">EDITOR</div>
           <div className="flex-1">
             <MonacoEditor
               height="100%"
@@ -158,7 +158,7 @@ export default function LaTeXEditorPage() {
 
         {/* Preview pane */}
         <div className="w-1/2 flex flex-col overflow-hidden">
-          <div className="px-3 py-1.5 bg-zinc-900 border-b border-zinc-800 text-[10px] text-zinc-500 flex items-center justify-between">
+          <div className="px-3 py-1.5 glass border-b border-white/[0.07] text-[10px] text-zinc-500 flex items-center justify-between">
             <span>PDF PREVIEW</span>
             {compiled && <span className="text-emerald-400 flex items-center gap-1"><CheckCircle className="w-3 h-3" />Compiled</span>}
           </div>
@@ -202,8 +202,8 @@ export default function LaTeXEditorPage() {
 
       {/* Compiler log */}
       {logOpen && (
-        <div className="border-t border-zinc-800 bg-zinc-900 max-h-40 overflow-auto">
-          <div className="flex items-center justify-between px-4 py-1.5 border-b border-zinc-800">
+        <div className="border-t border-white/[0.07] glass max-h-40 overflow-auto">
+          <div className="flex items-center justify-between px-4 py-1.5 border-b border-white/[0.07]">
             <span className="text-[10px] font-semibold text-zinc-400 uppercase tracking-widest">Compiler Log</span>
             <button onClick={() => setLogOpen(false)}><X className="w-3.5 h-3.5 text-zinc-500" /></button>
           </div>

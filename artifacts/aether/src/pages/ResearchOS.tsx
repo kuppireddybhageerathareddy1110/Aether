@@ -22,7 +22,7 @@ export default function ResearchOS() {
           <Link
             key={f.name}
             href={f.href}
-            className="bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-3xl p-6 transition-all group"
+            className="glass hover:border-zinc-700 rounded-3xl p-6 transition-all group"
           >
             <div className="font-semibold mb-1 group-hover:text-white">{f.name}</div>
             <div className="text-xs text-zinc-500">{f.desc}</div>
@@ -30,7 +30,7 @@ export default function ResearchOS() {
         ))}
       </div>
 
-      <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+      <div className="glass rounded-3xl p-8">
         <div className="text-emerald-400 text-xs mb-2">SYSTEM STATUS</div>
         <div className="text-3xl font-semibold mb-6">All systems operational</div>
         <div className="grid grid-cols-4 gap-6 text-center">

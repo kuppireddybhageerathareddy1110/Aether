@@ -70,20 +70,20 @@ export default function QAGenerator() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4">
         <h1 className="text-xl font-bold text-white flex items-center gap-2"><FlaskConical className="w-5 h-5 text-amber-400" />QA Generator</h1>
         <p className="text-xs text-zinc-500 mt-0.5">AI-generated test cases and Selenium scripts for platform features</p>
       </div>
 
       <div className="flex-1 overflow-auto p-6">
         <div className="max-w-3xl mx-auto space-y-5">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+          <div className="glass rounded-2xl p-5">
             <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-3">Generate Tests For</div>
             <div className="flex gap-3">
               <input value={query} onChange={e => setQuery(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && generate()}
-                className="flex-1 bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/50"
+                className="flex-1 bg-transparent border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/50"
                 placeholder="e.g. 'RAG query flow', 'knowledge graph generation', 'mood journal save'" />
               <button onClick={generate} disabled={loading || !query.trim()}
                 className="flex items-center gap-2 px-5 py-2.5 bg-amber-600 hover:bg-amber-500 disabled:opacity-40 text-white rounded-xl text-sm font-medium transition-colors">
@@ -103,7 +103,7 @@ export default function QAGenerator() {
               {activeTab === 'cases' && (
                 <div className="space-y-3">
                   {testCases.map(tc => (
-                    <div key={tc.id} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+                    <div key={tc.id} className="glass rounded-2xl p-5">
                       <div className="flex items-center gap-2 mb-3">
                         <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold flex items-center justify-center">TC{tc.id}</span>
                         <span className="text-sm font-semibold text-white">{tc.scenario}</span>
@@ -111,7 +111,7 @@ export default function QAGenerator() {
                       <ol className="space-y-1.5">
                         {tc.steps.map((step, i) => (
                           <li key={i} className="flex items-start gap-2.5 text-xs text-zinc-400">
-                            <span className="w-4 h-4 rounded bg-zinc-800 text-zinc-500 text-[9px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{i + 1}</span>
+                            <span className="w-4 h-4 rounded bg-white/[0.06] text-zinc-500 text-[9px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{i + 1}</span>
                             {step}
                           </li>
                         ))}
@@ -123,10 +123,10 @@ export default function QAGenerator() {
               )}
 
               {activeTab === 'selenium' && (
-                <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+                <div className="glass rounded-2xl p-5">
                   <div className="flex items-center justify-between mb-3">
                     <div className="text-xs text-zinc-400">Python · Selenium WebDriver</div>
-                    <button onClick={copy} className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 rounded-lg text-xs text-zinc-300 transition-colors">
+                    <button onClick={copy} className="flex items-center gap-1.5 px-3 py-1.5 glass-btn rounded-lg text-xs text-zinc-300 transition-colors">
                       {copied ? <CheckCircle className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                       {copied ? 'Copied!' : 'Copy'}
                     </button>

@@ -24,7 +24,7 @@ export default function Agents() {
           <div
             key={agent.id}
             onClick={() => setSelected(agent.id === selected ? null : agent.id)}
-            className={`bg-zinc-900 border border-zinc-800 rounded-3xl p-6 cursor-pointer transition-all hover:border-zinc-700 ${selected === agent.id ? 'ring-1 ring-white' : ''}`}
+            className={`glass rounded-3xl p-6 cursor-pointer transition-all hover:border-zinc-700 ${selected === agent.id ? 'ring-1 ring-white' : ''}`}
           >
             <div className="flex items-center justify-between mb-3">
               <div className="font-semibold">{agent.name}</div>
@@ -37,7 +37,7 @@ export default function Agents() {
         ))}
       </div>
 
-      <div className="mt-8 bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+      <div className="mt-8 glass rounded-3xl p-8">
         <div className="text-emerald-400 text-xs mb-2">SYSTEM STATUS</div>
         <div className="text-2xl">{agents.filter(a => a.status === 'active').length} agents running • {agents.filter(a => a.status === 'idle').length} idle</div>
         <div className="mt-4 flex gap-4">

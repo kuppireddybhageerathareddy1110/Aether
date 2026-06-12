@@ -24,14 +24,14 @@ export default function Collaborate() {
           <div
             key={room.id}
             onClick={() => setJoined(room.id)}
-            className={`bg-zinc-900 border border-zinc-800 rounded-3xl p-7 cursor-pointer hover:border-zinc-700 transition-all ${joined === room.id ? 'ring-1 ring-white' : ''}`}
+            className={`glass rounded-3xl p-7 cursor-pointer hover:border-zinc-700 transition-all ${joined === room.id ? 'ring-1 ring-white' : ''}`}
           >
             <div className="flex items-center justify-between mb-3">
               <div className={`w-2 h-2 rounded-full ${room.active ? 'bg-emerald-400' : 'bg-zinc-600'}`} />
               <div className="text-xs text-zinc-500">{room.participants} participants</div>
             </div>
             <div className="font-semibold">{room.name}</div>
-            <button className="mt-5 px-4 py-2 bg-zinc-800 rounded-xl text-xs">
+            <button className="mt-5 px-4 py-2 bg-white/[0.06] rounded-xl text-xs">
               {joined === room.id ? 'Joined ✓' : 'Join Room'}
             </button>
           </div>
@@ -39,7 +39,7 @@ export default function Collaborate() {
       </div>
 
       {joined && (
-        <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+        <div className="glass rounded-3xl p-8">
           <div className="text-emerald-400 text-xs mb-2">LIVE COLLABORATION</div>
           <div className="text-xl mb-6">{rooms.find(r => r.id === joined)?.name}</div>
           <div className="bg-zinc-950 rounded-2xl p-6 h-48 text-sm text-zinc-500">

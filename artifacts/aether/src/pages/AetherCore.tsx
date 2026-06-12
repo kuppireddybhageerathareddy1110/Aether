@@ -16,7 +16,7 @@ export default function AetherCore() {
 
       <div className="space-y-3">
         {modules.map((m, i) => (
-          <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex items-center justify-between">
+          <div key={i} className="glass rounded-2xl p-6 flex items-center justify-between">
             <div>
               <div className="font-semibold">{m.name}</div>
               <div className="text-xs text-zinc-500 mt-1">Source: {m.source} • v{m.version}</div>

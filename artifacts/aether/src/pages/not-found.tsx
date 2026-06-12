@@ -3,7 +3,7 @@ import { Link } from "wouter";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-zinc-950">
+    <div className="min-h-screen w-full flex items-center justify-center bg-transparent">
       <div className="text-center">
         <div className="flex items-center justify-center gap-2 mb-4">
           <AlertCircle className="h-8 w-8 text-red-500" />

@@ -23,16 +23,16 @@ export default function KnowledgeMap() {
       {map && (
         <div className="space-y-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-7"><div className="text-4xl font-semibold">{map.totalConcepts}</div><div className="text-xs text-zinc-500 mt-1">CONCEPTS</div></div>
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-7"><div className="text-4xl font-semibold">{map.connections}</div><div className="text-xs text-zinc-500 mt-1">CONNECTIONS</div></div>
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-7"><div className="text-4xl font-semibold">{map.clusters.length}</div><div className="text-xs text-zinc-500 mt-1">CLUSTERS</div></div>
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-7"><div className="text-4xl font-semibold">{map.crossLinks}</div><div className="text-xs text-zinc-500 mt-1">CROSS LINKS</div></div>
+            <div className="glass rounded-3xl p-7"><div className="text-4xl font-semibold">{map.totalConcepts}</div><div className="text-xs text-zinc-500 mt-1">CONCEPTS</div></div>
+            <div className="glass rounded-3xl p-7"><div className="text-4xl font-semibold">{map.connections}</div><div className="text-xs text-zinc-500 mt-1">CONNECTIONS</div></div>
+            <div className="glass rounded-3xl p-7"><div className="text-4xl font-semibold">{map.clusters.length}</div><div className="text-xs text-zinc-500 mt-1">CLUSTERS</div></div>
+            <div className="glass rounded-3xl p-7"><div className="text-4xl font-semibold">{map.crossLinks}</div><div className="text-xs text-zinc-500 mt-1">CROSS LINKS</div></div>
           </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+          <div className="glass rounded-3xl p-8">
             <div className="text-xs text-zinc-500 mb-4">MAJOR CLUSTERS</div>
             <div className="flex flex-wrap gap-3">
-              {map.clusters.map((c: string, i: number) => <div key={i} className="px-5 py-2 bg-zinc-800 rounded-2xl text-sm">{c}</div>)}
+              {map.clusters.map((c: string, i: number) => <div key={i} className="px-5 py-2 bg-white/[0.06] rounded-2xl text-sm">{c}</div>)}
             </div>
           </div>
 

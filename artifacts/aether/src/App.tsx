@@ -44,7 +44,6 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Dashboard} />
-      {/* New feature routes */}
       <Route path="/agentic-rag" component={AgenticRAG} />
       <Route path="/latex-editor" component={LaTeXEditor} />
       <Route path="/editor" component={LaTeXEditor} />
@@ -54,7 +53,6 @@ function Router() {
       <Route path="/account" component={Account} />
       <Route path="/help" component={Help} />
       <Route path="/settings" component={Settings} />
-      {/* Legacy/existing routes */}
       <Route path="/knowledge-graph" component={Graph} />
       <Route path="/graph" component={Graph} />
       <Route path="/qa" component={QA} />
@@ -89,11 +87,38 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-        <div className="flex h-screen bg-zinc-950 text-white overflow-hidden">
-          <Sidebar />
-          <main className="flex-1 overflow-auto">
-            <Router />
-          </main>
+        <div className="flex h-screen text-white overflow-hidden relative" style={{ background: '#060610' }}>
+          {/* Ambient background blobs */}
+          <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+            <div
+              className="ambient-blob"
+              style={{ width: 700, height: 700, top: '-20%', left: '-15%', background: 'radial-gradient(circle, rgba(52,211,153,0.28) 0%, rgba(13,148,136,0.12) 40%, transparent 70%)', filter: 'blur(60px)' }}
+            />
+            <div
+              className="ambient-blob"
+              style={{ width: 600, height: 600, top: '35%', right: '-12%', background: 'radial-gradient(circle, rgba(139,92,246,0.25) 0%, rgba(99,102,241,0.1) 40%, transparent 70%)', filter: 'blur(60px)', animationDelay: '-7s' }}
+            />
+            <div
+              className="ambient-blob"
+              style={{ width: 500, height: 500, bottom: '-15%', left: '25%', background: 'radial-gradient(circle, rgba(59,130,246,0.2) 0%, rgba(37,99,235,0.08) 40%, transparent 70%)', filter: 'blur(60px)', animationDelay: '-14s' }}
+            />
+            <div
+              className="ambient-blob"
+              style={{ width: 350, height: 350, top: '15%', left: '40%', background: 'radial-gradient(circle, rgba(236,72,153,0.15) 0%, transparent 70%)', filter: 'blur(60px)', animationDelay: '-3s' }}
+            />
+            <div
+              className="ambient-blob"
+              style={{ width: 250, height: 250, top: '60%', left: '55%', background: 'radial-gradient(circle, rgba(251,191,36,0.1) 0%, transparent 70%)', filter: 'blur(50px)', animationDelay: '-10s' }}
+            />
+          </div>
+
+          {/* Content layer */}
+          <div className="relative flex w-full h-full" style={{ zIndex: 1 }}>
+            <Sidebar />
+            <main className="flex-1 overflow-auto">
+              <Router />
+            </main>
+          </div>
         </div>
         <Toaster />
       </WouterRouter>

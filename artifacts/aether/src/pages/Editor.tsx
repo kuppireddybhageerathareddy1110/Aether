@@ -31,7 +31,7 @@ This is a live collaborative LaTeX editor powered by Aether.
 
   return (
     <div className="h-screen flex flex-col">
-      <div className="border-b border-zinc-800 p-4 flex items-center justify-between bg-zinc-950">
+      <div className="border-b border-white/[0.07] p-4 flex items-center justify-between bg-transparent">
         <div>
           <h2 className="font-semibold">LaTeX Editor</h2>
           <p className="text-xs text-zinc-500">Real-time collaboration • Pandoc export • AI assistance</p>
@@ -39,7 +39,7 @@ This is a live collaborative LaTeX editor powered by Aether.
         <div className="flex gap-3">
           <button
             onClick={compile}
-            className="px-5 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-lg text-sm font-medium transition-colors"
+            className="px-5 py-2 glass-btn rounded-lg text-sm font-medium transition-colors"
           >
             Compile PDF
           </button>
@@ -50,7 +50,7 @@ This is a live collaborative LaTeX editor powered by Aether.
       </div>
 
       <div className="flex flex-1 overflow-hidden">
-        <div className="w-1/2 border-r border-zinc-800">
+        <div className="w-1/2 border-r border-white/[0.07]">
           <Editor
             height="100%"
             defaultLanguage="latex"
@@ -66,7 +66,7 @@ This is a live collaborative LaTeX editor powered by Aether.
           />
         </div>
 
-        <div className="w-1/2 p-8 bg-zinc-950 overflow-auto font-mono text-sm">
+        <div className="w-1/2 p-8 bg-transparent overflow-auto font-mono text-sm">
           <div className="text-emerald-400 mb-4 text-xs tracking-widest">COMPILED OUTPUT</div>
           <pre className="whitespace-pre-wrap text-zinc-300">{compiled}</pre>
         </div>

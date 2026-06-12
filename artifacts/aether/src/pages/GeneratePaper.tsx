@@ -25,12 +25,12 @@ export default function GeneratePaper() {
       <h1 className="text-5xl font-semibold tracking-tighter mb-2">Generate Research Paper</h1>
       <p className="text-xl text-zinc-400 mb-8">AI-powered paper generation from your knowledge base</p>
 
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 mb-8">
+      <div className="glass rounded-2xl p-8 mb-8">
         <input
           type="text"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
-          className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-sm mb-4"
+          className="w-full bg-transparent border border-white/[0.07] rounded-xl px-4 py-3 text-sm mb-4"
           placeholder="Mood-aware Graph Neural Networks for Research Analytics..."
         />
         <button
@@ -44,16 +44,16 @@ export default function GeneratePaper() {
 
       {paper && (
         <div className="space-y-6">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+          <div className="glass rounded-3xl p-8">
             <div className="text-xs text-zinc-500 mb-2">TITLE</div>
             <div className="text-2xl font-semibold">{paper.title}</div>
           </div>
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+          <div className="glass rounded-3xl p-8">
             <div className="text-xs text-zinc-500 mb-2">ABSTRACT</div>
             <div className="text-sm leading-relaxed text-zinc-300">{paper.abstract}</div>
           </div>
           <div className="grid grid-cols-2 gap-6">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+            <div className="glass rounded-3xl p-8">
               <div className="text-xs text-zinc-500 mb-4">SECTIONS</div>
               <div className="space-y-2">
                 {paper.sections.map((s: string, i: number) => (
@@ -61,7 +61,7 @@ export default function GeneratePaper() {
                 ))}
               </div>
             </div>
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+            <div className="glass rounded-3xl p-8">
               <div className="text-4xl font-semibold">{paper.wordCount}</div>
               <div className="text-xs text-zinc-500 mt-1">WORDS</div>
               <div className="text-4xl font-semibold mt-6">{paper.references}</div>

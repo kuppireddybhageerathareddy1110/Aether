@@ -33,19 +33,19 @@ export default function Explainability() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4">
         <h1 className="text-xl font-bold text-white flex items-center gap-2"><FlaskConical className="w-5 h-5 text-amber-400" />XAI — Explainability</h1>
         <p className="text-xs text-zinc-500 mt-0.5">SHAP values, attention heatmaps, and counterfactual explanations</p>
       </div>
 
       <div className="flex-1 overflow-auto p-6">
         <div className="max-w-3xl mx-auto space-y-5">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+          <div className="glass rounded-2xl p-5">
             <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-3">Explain Model Decision For</div>
             <div className="flex gap-3">
               <input value={query} onChange={e => setQuery(e.target.value)} onKeyDown={e => e.key === 'Enter' && explain()}
-                className="flex-1 bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/50"
+                className="flex-1 bg-transparent border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500/50"
                 placeholder="e.g. 'Recommend paper on graph attention networks'" />
               <button onClick={explain} disabled={loading || !query.trim()}
                 className="flex items-center gap-2 px-5 py-2.5 bg-amber-600 hover:bg-amber-500 disabled:opacity-40 text-white rounded-xl text-sm font-medium transition-colors">
@@ -57,7 +57,7 @@ export default function Explainability() {
 
           {result && (
             <>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+              <div className="glass rounded-2xl p-5">
                 <div className="flex items-center justify-between mb-2">
                   <div className="text-sm font-semibold text-white">{result.decision}</div>
                   <span className="text-xs text-emerald-400 font-mono">Confidence: {(result.confidence * 100).toFixed(0)}%</span>
@@ -75,7 +75,7 @@ export default function Explainability() {
               </div>
 
               {tab === 'shap' && (
-                <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+                <div className="glass rounded-2xl p-5">
                   <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4 flex items-center gap-1.5"><BarChart3 className="w-3.5 h-3.5" />Feature Contributions (SHAP)</div>
                   <div className="space-y-3">
                     {result.features.map(f => (
@@ -84,7 +84,7 @@ export default function Explainability() {
                           <span className="text-zinc-300">{f.name}</span>
                           <span className={f.type === 'positive' ? 'text-emerald-400' : 'text-red-400'}>{f.value > 0 ? '+' : ''}{f.value.toFixed(2)}</span>
                         </div>
-                        <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                        <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
                           <div className={`h-full rounded-full ${f.type === 'positive' ? 'bg-gradient-to-r from-emerald-600 to-emerald-400' : 'bg-gradient-to-r from-red-600 to-red-400'}`}
                             style={{ width: `${Math.abs(f.value) * 100}%`, marginLeft: f.type === 'negative' ? `${(1 - Math.abs(f.value)) * 100}%` : undefined }} />
                         </div>
@@ -95,7 +95,7 @@ export default function Explainability() {
               )}
 
               {tab === 'attention' && (
-                <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+                <div className="glass rounded-2xl p-5">
                   <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4 flex items-center gap-1.5"><Brain className="w-3.5 h-3.5" />Attention Weights (Layer 4)</div>
                   <div className="grid grid-cols-8 gap-1">
                     {Array.from({ length: 64 }, (_, i) => {
@@ -110,7 +110,7 @@ export default function Explainability() {
               )}
 
               {tab === 'counterfactual' && (
-                <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+                <div className="glass rounded-2xl p-5">
                   <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-4">Counterfactual Explanations</div>
                   <div className="space-y-3">
                     {result.counterfactuals.map((cf, i) => (

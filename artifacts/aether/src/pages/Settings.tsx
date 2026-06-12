@@ -52,14 +52,14 @@ export default function Settings() {
   if (loading) return <div className="flex items-center justify-center h-screen text-zinc-500">Loading settings...</div>;
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4">
         <h1 className="text-xl font-bold text-white flex items-center gap-2"><SettingsIcon className="w-5 h-5 text-zinc-400" />Settings</h1>
         <p className="text-xs text-zinc-500 mt-0.5">Configure platform preferences and defaults</p>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
-        <div className="w-44 border-r border-zinc-800 bg-zinc-900/30 p-3 space-y-1">
+        <div className="w-44 border-r border-white/[0.07] bg-zinc-900/30 p-3 space-y-1">
           {TABS.map(tab => (
             <button key={tab.key} onClick={() => setActiveTab(tab.key)}
               className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition-all text-left ${activeTab === tab.key ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-white hover:bg-zinc-800/50'}`}>
@@ -71,19 +71,19 @@ export default function Settings() {
         <div className="flex-1 overflow-auto p-6">
           {activeTab === 'appearance' && (
             <div className="max-w-lg space-y-5">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+              <div className="glass rounded-2xl p-5">
                 <div className="text-sm font-semibold text-white mb-4">Theme</div>
                 <div className="grid grid-cols-3 gap-3">
                   {[{ k: 'dark', label: 'Dark', icon: Moon }, { k: 'light', label: 'Light', icon: Sun }, { k: 'system', label: 'System', icon: Monitor }].map(t => (
                     <button key={t.k} onClick={() => set('theme', t.k)}
-                      className={`flex flex-col items-center gap-2 p-4 rounded-xl border transition-all ${settings.theme === t.k ? 'border-emerald-500/40 bg-emerald-500/10' : 'border-zinc-700 bg-zinc-800 hover:border-zinc-600'}`}>
+                      className={`flex flex-col items-center gap-2 p-4 rounded-xl border transition-all ${settings.theme === t.k ? 'border-emerald-500/40 bg-emerald-500/10' : 'border-zinc-700 bg-white/[0.06] hover:border-zinc-600'}`}>
                       <t.icon className={`w-5 h-5 ${settings.theme === t.k ? 'text-emerald-400' : 'text-zinc-500'}`} />
                       <span className={`text-xs font-medium ${settings.theme === t.k ? 'text-white' : 'text-zinc-500'}`}>{t.label}</span>
                     </button>
                   ))}
                 </div>
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+              <div className="glass rounded-2xl p-5">
                 <div className="text-sm font-semibold text-white mb-4">Accent Color</div>
                 <div className="flex gap-3">
                   {['#10b981', '#6366f1', '#f59e0b', '#ec4899', '#3b82f6', '#ef4444'].map(color => (
@@ -93,7 +93,7 @@ export default function Settings() {
                   ))}
                 </div>
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+              <div className="glass rounded-2xl p-5">
                 <div className="text-sm font-semibold text-white mb-4">Interface Density</div>
                 <div className="grid grid-cols-3 gap-3">
                   {['Compact', 'Default', 'Comfortable'].map(d => (
@@ -107,13 +107,13 @@ export default function Settings() {
 
           {activeTab === 'models' && (
             <div className="max-w-lg space-y-5">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+              <div className="glass rounded-2xl p-5">
                 <div className="text-sm font-semibold text-white mb-4">Primary LLM</div>
                 {[{ value: 'gpt-4o', label: 'GPT-4o', desc: 'Latest OpenAI model, best quality', badge: 'Recommended' },
                   { value: 'gpt-4-turbo', label: 'GPT-4 Turbo', desc: 'Fast and cost-effective' },
                   { value: 'claude-3-5-sonnet', label: 'Claude 3.5 Sonnet', desc: 'Excellent for long documents' },
                   { value: 'llama-3-70b', label: 'Llama 3.1 70B', desc: 'Open-source, self-hosted', badge: 'Free' }].map(m => (
-                  <label key={m.value} className={`flex items-center gap-3 p-3 rounded-xl border mb-2 cursor-pointer transition-all ${settings.model === m.value ? 'border-emerald-500/40 bg-emerald-500/5' : 'border-zinc-800 hover:border-zinc-700'}`}>
+                  <label key={m.value} className={`flex items-center gap-3 p-3 rounded-xl border mb-2 cursor-pointer transition-all ${settings.model === m.value ? 'border-emerald-500/40 bg-emerald-500/5' : 'border-white/[0.07] hover:border-zinc-700'}`}>
                     <input type="radio" name="model" value={m.value} checked={settings.model === m.value} onChange={e => set('model', e.target.value)} className="accent-emerald-500" />
                     <div className="flex-1">
                       <div className="text-sm font-medium text-white flex items-center gap-2">{m.label} {m.badge && <span className="px-1.5 py-0.5 bg-zinc-700 text-zinc-400 text-[9px] rounded-full">{m.badge}</span>}</div>
@@ -127,7 +127,7 @@ export default function Settings() {
 
           {activeTab === 'rag' && (
             <div className="max-w-lg space-y-5">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+              <div className="glass rounded-2xl p-5">
                 <div className="text-sm font-semibold text-white mb-4">Retrieval Settings</div>
                 {[
                   { label: 'Chunk Size (tokens)', key: 'ragChunkSize', min: 128, max: 2048, step: 128 },
@@ -142,7 +142,7 @@ export default function Settings() {
                 ))}
                 <div>
                   <label className="text-xs text-zinc-400 block mb-1.5">Embedding Model</label>
-                  <select className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-zinc-300">
+                  <select className="w-full bg-white/[0.06] border border-zinc-700 rounded-xl px-3 py-2 text-sm text-zinc-300">
                     <option>text-embedding-3-large</option><option>text-embedding-ada-002</option><option>BAAI/bge-large-en</option>
                   </select>
                 </div>
@@ -152,7 +152,7 @@ export default function Settings() {
 
           {activeTab === 'notifications' && (
             <div className="max-w-lg space-y-4">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+              <div className="glass rounded-2xl p-5">
                 <div className="text-sm font-semibold text-white mb-4">Notification Preferences</div>
                 {[
                   { key: 'notifGraph', label: 'Knowledge Graph Complete', desc: 'When a graph finishes generating' },
@@ -162,7 +162,7 @@ export default function Settings() {
                   { key: 'notifSystem', label: 'System Updates', desc: 'Platform updates and releases' },
                   { key: 'notifDigest', label: 'Weekly Digest', desc: 'Weekly research summary email' },
                 ].map(p => (
-                  <div key={p.key} className="flex items-center justify-between py-3 border-b border-zinc-800 last:border-0">
+                  <div key={p.key} className="flex items-center justify-between py-3 border-b border-white/[0.07] last:border-0">
                     <div><div className="text-sm text-white">{p.label}</div><div className="text-xs text-zinc-500">{p.desc}</div></div>
                     <Toggle k={p.key} />
                   </div>
@@ -173,25 +173,25 @@ export default function Settings() {
 
           {activeTab === 'security' && (
             <div className="max-w-lg space-y-4">
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+              <div className="glass rounded-2xl p-5">
                 <div className="text-sm font-semibold text-white mb-4">Security Settings</div>
                 {[
                   { key: 'twoFactor', label: 'Two-Factor Authentication', desc: 'Add an extra layer of security' },
                   { key: 'sessionTimeout', label: 'Session Timeout', desc: 'Auto-logout after 30 minutes of inactivity' },
                   { key: 'loginNotifications', label: 'Login Notifications', desc: 'Email alert on new device login' },
                 ].map(s => (
-                  <div key={s.key} className="flex items-center justify-between py-3 border-b border-zinc-800 last:border-0">
+                  <div key={s.key} className="flex items-center justify-between py-3 border-b border-white/[0.07] last:border-0">
                     <div><div className="text-sm text-white">{s.label}</div><div className="text-xs text-zinc-500">{s.desc}</div></div>
                     <Toggle k={s.key} />
                   </div>
                 ))}
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5">
+              <div className="glass rounded-2xl p-5">
                 <div className="text-sm font-semibold text-white mb-3">Change Password</div>
                 {['Current Password', 'New Password', 'Confirm New Password'].map(f => (
                   <div key={f} className="mb-3">
                     <label className="text-xs text-zinc-500 block mb-1">{f}</label>
-                    <input type="password" className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-emerald-500/50" />
+                    <input type="password" className="w-full bg-white/[0.06] border border-zinc-700 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-emerald-500/50" />
                   </div>
                 ))}
                 <button className="px-6 py-2.5 bg-zinc-700 hover:bg-zinc-600 text-white rounded-xl text-sm font-medium transition-colors">Update Password</button>

@@ -31,8 +31,8 @@ export default function RAGChat() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4 flex items-center justify-between">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4 flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold text-white flex items-center gap-2"><MessageCircle className="w-5 h-5 text-teal-400" />RAG Chat</h1>
           <p className="text-xs text-zinc-500 mt-0.5">Semantic search over all your research data</p>
@@ -48,7 +48,7 @@ export default function RAGChat() {
                 <Bot className="w-4 h-4 text-white" />
               </div>
             )}
-            <div className={`max-w-xl rounded-2xl px-4 py-3 ${msg.role === 'user' ? 'bg-zinc-800 border border-zinc-700' : 'bg-zinc-900 border border-zinc-800'}`}>
+            <div className={`max-w-xl rounded-2xl px-4 py-3 ${msg.role === 'user' ? 'bg-zinc-800 border border-zinc-700' : 'glass'}`}>
               <div className="text-sm text-zinc-200 leading-relaxed whitespace-pre-wrap">{msg.content}</div>
               <div className="flex items-center justify-between mt-2 gap-2">
                 <div className="text-[10px] text-zinc-600">{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
@@ -67,7 +67,7 @@ export default function RAGChat() {
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center flex-shrink-0">
               <Bot className="w-4 h-4 text-white" />
             </div>
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-3">
+            <div className="glass rounded-2xl px-4 py-3">
               <div className="flex items-center gap-1.5 text-zinc-500 text-sm"><Sparkles className="w-4 h-4 animate-pulse" />Thinking...</div>
             </div>
           </div>
@@ -75,11 +75,11 @@ export default function RAGChat() {
         <div ref={bottomRef} />
       </div>
 
-      <div className="border-t border-zinc-800 p-4">
+      <div className="border-t border-white/[0.07] p-4">
         <div className="max-w-3xl mx-auto flex gap-3">
           <input value={input} onChange={e => setInput(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } }}
-            className="flex-1 bg-zinc-900 border border-zinc-700 rounded-2xl px-5 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-teal-500/50"
+            className="flex-1 glass border border-zinc-700 rounded-2xl px-5 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-teal-500/50"
             placeholder="Ask about your research data... (Enter to send)" disabled={loading} />
           <button onClick={send} disabled={loading || !input.trim()}
             className="p-3 bg-teal-600 hover:bg-teal-500 disabled:opacity-40 text-white rounded-2xl transition-colors">

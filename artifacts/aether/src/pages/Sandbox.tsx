@@ -79,16 +79,16 @@ export default function Sandbox() {
   const copy = () => { navigator.clipboard.writeText(code).catch(() => {}); setCopied(true); setTimeout(() => setCopied(false), 2000); };
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4">
         <h1 className="text-xl font-bold text-white flex items-center gap-2"><Code className="w-5 h-5 text-indigo-400" />Developer Sandbox</h1>
         <p className="text-xs text-zinc-500 mt-0.5">Test Aether API endpoints interactively with live execution</p>
       </div>
 
       <div className="flex flex-1 overflow-hidden gap-0">
         {/* Left: examples + editor */}
-        <div className="flex-1 flex flex-col border-r border-zinc-800">
-          <div className="border-b border-zinc-800 p-3 flex items-center gap-2 flex-wrap">
+        <div className="flex-1 flex flex-col border-r border-white/[0.07]">
+          <div className="border-b border-white/[0.07] p-3 flex items-center gap-2 flex-wrap">
             {EXAMPLES.map((ex, i) => (
               <button key={i} onClick={() => { setCode(ex.code); setOutput(''); }}
                 className={`px-3 py-1.5 rounded-lg text-xs transition-colors ${code === ex.code ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : 'text-zinc-500 hover:text-white hover:bg-zinc-800'}`}>
@@ -96,7 +96,7 @@ export default function Sandbox() {
               </button>
             ))}
           </div>
-          <div className="flex items-center justify-between px-4 py-2 border-b border-zinc-800 bg-zinc-900/30">
+          <div className="flex items-center justify-between px-4 py-2 border-b border-white/[0.07] bg-zinc-900/30">
             <span className="text-xs text-zinc-500">JavaScript · Live execution against /api/*</span>
             <div className="flex gap-2">
               <button onClick={copy} className="flex items-center gap-1 px-2.5 py-1 text-[10px] text-zinc-500 hover:text-white hover:bg-zinc-800 rounded-md transition-colors">
@@ -110,13 +110,13 @@ export default function Sandbox() {
             </div>
           </div>
           <textarea value={code} onChange={e => setCode(e.target.value)}
-            className="flex-1 bg-zinc-950 text-sm text-zinc-200 font-mono p-5 resize-none focus:outline-none leading-relaxed"
+            className="flex-1 bg-transparent text-sm text-zinc-200 font-mono p-5 resize-none focus:outline-none leading-relaxed"
             spellCheck={false} />
         </div>
 
         {/* Right: output */}
         <div className="w-96 flex flex-col">
-          <div className="border-b border-zinc-800 px-4 py-2 flex items-center gap-2">
+          <div className="border-b border-white/[0.07] px-4 py-2 flex items-center gap-2">
             <span className="text-xs font-semibold text-zinc-400 uppercase tracking-widest">Output</span>
             {output && <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />}
           </div>

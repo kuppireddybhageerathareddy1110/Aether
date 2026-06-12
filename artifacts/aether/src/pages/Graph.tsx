@@ -38,20 +38,20 @@ export default function KnowledgeGraph() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-zinc-950">
-      <div className="border-b border-zinc-800 bg-zinc-900/50 px-6 py-4">
+    <div className="h-screen flex flex-col bg-transparent">
+      <div className="border-b border-white/[0.07] bg-zinc-900/50 px-6 py-4">
         <h1 className="text-xl font-bold text-white flex items-center gap-2"><GitBranch className="w-5 h-5 text-emerald-400" />Knowledge Graph</h1>
         <p className="text-xs text-zinc-500 mt-0.5">Generate and explore knowledge graphs from topics and documents</p>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
         {/* Left: generate + list */}
-        <div className="w-72 border-r border-zinc-800 flex flex-col bg-zinc-900/20">
-          <div className="p-4 border-b border-zinc-800">
+        <div className="w-72 border-r border-white/[0.07] flex flex-col bg-zinc-900/20">
+          <div className="p-4 border-b border-white/[0.07]">
             <div className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-3">Generate Graph</div>
             <input value={topic} onChange={e => setTopic(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && generate()}
-              className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-emerald-500/50 mb-2"
+              className="w-full glass border border-zinc-700 rounded-xl px-3 py-2 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-emerald-500/50 mb-2"
               placeholder="Topic (e.g. 'Attention Mechanisms')" />
             {error && <div className="text-xs text-red-400 mb-2">{error}</div>}
             <button onClick={generate} disabled={generating || !topic.trim()}
@@ -72,7 +72,7 @@ export default function KnowledgeGraph() {
               : graphs.length === 0 ? <div className="text-center py-8 text-zinc-600 text-xs">No graphs yet — generate one above</div>
               : graphs.map(g => (
                 <div key={g.id}
-                  className={`p-3 rounded-xl mb-2 cursor-pointer transition-all border ${selected?.id === g.id ? 'border-emerald-500/40 bg-emerald-500/5' : 'border-zinc-800 hover:border-zinc-700 bg-zinc-900/50'}`}
+                  className={`p-3 rounded-xl mb-2 cursor-pointer transition-all border ${selected?.id === g.id ? 'border-emerald-500/40 bg-emerald-500/5' : 'border-white/[0.07] hover:border-zinc-700 bg-zinc-900/50'}`}
                   onClick={() => setSelected(g)}>
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
@@ -93,14 +93,14 @@ export default function KnowledgeGraph() {
         <div className="flex-1 flex flex-col">
           {selected ? (
             <>
-              <div className="border-b border-zinc-800 px-5 py-3 flex items-center justify-between">
+              <div className="border-b border-white/[0.07] px-5 py-3 flex items-center justify-between">
                 <div>
                   <div className="text-sm font-semibold text-white">{selected.name}</div>
                   <div className="text-xs text-zinc-500">{selected.nodeCount} nodes · {selected.edgeCount} edges · {new Date(selected.createdAt).toLocaleDateString()}</div>
                 </div>
                 <div className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-400" /><span className="text-xs text-emerald-400">Complete</span></div>
               </div>
-              <div className="flex-1 relative bg-zinc-950 overflow-hidden">
+              <div className="flex-1 relative bg-transparent overflow-hidden">
                 <svg width="100%" height="100%" viewBox="0 0 500 400">
                   {selected.edges.map((edge: any) => {
                     const source = selected.nodes.find((n: any) => n.id === edge.source);
@@ -116,7 +116,7 @@ export default function KnowledgeGraph() {
                   ))}
                 </svg>
               </div>
-              <div className="border-t border-zinc-800 px-5 py-3 flex gap-6">
+              <div className="border-t border-white/[0.07] px-5 py-3 flex gap-6">
                 {[
                   { label: 'Nodes', value: selected.nodeCount },
                   { label: 'Edges', value: selected.edgeCount },

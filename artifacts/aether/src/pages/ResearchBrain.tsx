@@ -38,14 +38,14 @@ export default function ResearchBrain() {
               { label: 'XAI Queries', value: state.xaiQueries },
               { label: 'Agents Running', value: state.agentsRunning },
             ].map(({ label, value }) => (
-              <div key={label} className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6">
+              <div key={label} className="glass rounded-3xl p-6">
                 <div className="text-xs text-zinc-500">{label}</div>
                 <div className="text-2xl font-semibold mt-2">{value}</div>
               </div>
             ))}
           </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+          <div className="glass rounded-3xl p-8">
             <div className="text-xs text-zinc-500 mb-2">CURRENT FOCUS</div>
             <div className="text-3xl font-semibold">{state.currentFocus}</div>
           </div>
@@ -55,12 +55,12 @@ export default function ResearchBrain() {
             <div className="text-2xl">{state.prediction}</div>
           </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+          <div className="glass rounded-3xl p-8">
             <div className="text-xs text-zinc-500 mb-4">RECOMMENDED ACTIONS</div>
             <div className="space-y-3">
               {state.recommendedActions.map((action: string, i: number) => (
                 <div key={i} className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-zinc-800 flex items-center justify-center text-xs">{i + 1}</div>
+                  <div className="w-6 h-6 rounded-full bg-white/[0.06] flex items-center justify-center text-xs">{i + 1}</div>
                   <div className="text-sm">{action}</div>
                 </div>
               ))}

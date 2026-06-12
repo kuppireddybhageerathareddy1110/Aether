@@ -20,7 +20,7 @@ export default function GraphViz() {
       <h1 className="text-5xl font-semibold tracking-tighter mb-2">Graph Visualizer</h1>
       <p className="text-xl text-zinc-400 mb-8">Interactive knowledge graph visualization</p>
 
-      <div className="bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden">
+      <div className="glass rounded-3xl overflow-hidden">
         <svg width="100%" height="400" viewBox="0 0 600 400" className="bg-zinc-950">
           {edges.map((edge, i) => {
             const from = nodes.find(n => n.id === edge.from)!;
@@ -57,15 +57,15 @@ export default function GraphViz() {
       </div>
 
       <div className="mt-6 grid grid-cols-3 gap-6">
-        <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-7">
+        <div className="glass rounded-3xl p-7">
           <div className="text-4xl font-semibold">{nodes.length}</div>
           <div className="text-xs text-zinc-500 mt-1">NODES</div>
         </div>
-        <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-7">
+        <div className="glass rounded-3xl p-7">
           <div className="text-4xl font-semibold">{edges.length}</div>
           <div className="text-xs text-zinc-500 mt-1">EDGES</div>
         </div>
-        <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-7">
+        <div className="glass rounded-3xl p-7">
           <div className="text-4xl font-semibold">0.73</div>
           <div className="text-xs text-zinc-500 mt-1">AVG CENTRALITY</div>
         </div>

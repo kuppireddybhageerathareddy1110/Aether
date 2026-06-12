@@ -25,7 +25,7 @@ export default function DeepInsights() {
       {data && (
         <div className="space-y-6">
           {data.patterns.map((p: string, i: number) => (
-            <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 text-lg">{p}</div>
+            <div key={i} className="glass rounded-3xl p-8 text-lg">{p}</div>
           ))}
           <div className="bg-emerald-500/5 border border-emerald-900 rounded-3xl p-8">
             <div className="text-emerald-400 text-xs mb-2">PREDICTION</div>
