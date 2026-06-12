@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+pymongo
+motor
+redis
+python-dotenv
+pydantic
+pydantic-settings
+python-multipart
+pymupdf
+spacy
+sentence-transformers
+faiss-cpu
+groq
+google-generativeai
