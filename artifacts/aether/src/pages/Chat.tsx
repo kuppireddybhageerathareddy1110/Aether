@@ -1,20 +1,37 @@
 import { useState, useRef, useEffect } from 'react';
-import { MessageCircle, Send, RefreshCw, Bot, User, Sparkles } from 'lucide-react';
+import { MessageCircle, Send, RefreshCw, Bot, User, Sparkles, GitBranch, ChevronRight } from 'lucide-react';
 import { api } from '@/lib/api';
+import { useLocation, Link } from 'wouter';
 
-interface Message { role: 'user' | 'assistant'; content: string; timestamp: string; confidence?: number; }
+interface Message { role: 'user' | 'assistant'; content: string; timestamp: string; confidence?: number; source?: string; }
 
-const WELCOME = 'Hi! I\'m Aether, your AI research assistant. Ask me anything about your documents, knowledge graphs, or research topics.';
+const WELCOME = 'Hi! I\'m Aether, your AI research assistant. Ask me anything about your uploaded documents, knowledge graphs, or research topics. I retrieve answers directly from your indexed knowledge base.';
 
 export default function RAGChat() {
+  const [location] = useLocation();
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: WELCOME, timestamp: new Date().toISOString() },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [docCount, setDocCount] = useState(0);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get('q');
+    if (q) {
+      setInput(q);
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    api.get<any[]>('/upload/documents').then(docs => setDocCount(docs.length)).catch(() => {});
+  }, []);
 
   const send = async () => {
     if (!input.trim() || loading) return;
@@ -37,7 +54,18 @@ export default function RAGChat() {
           <h1 className="text-xl font-bold text-white flex items-center gap-2"><MessageCircle className="w-5 h-5 text-teal-400" />RAG Chat</h1>
           <p className="text-xs text-zinc-500 mt-0.5">Semantic search over all your research data</p>
         </div>
-        <div className="flex items-center gap-1.5 text-xs text-emerald-400"><span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />Aether Online</div>
+        <div className="flex items-center gap-3">
+          {docCount > 0 ? (
+            <Link href="/upload" className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-[10px] font-medium hover:bg-emerald-500/20 transition-colors">
+              <GitBranch className="w-3 h-3" />{docCount} doc{docCount !== 1 ? 's' : ''} indexed
+            </Link>
+          ) : (
+            <Link href="/upload" className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-zinc-700 text-zinc-500 text-[10px] hover:text-zinc-300 hover:border-zinc-600 transition-colors">
+              Upload docs <ChevronRight className="w-3 h-3" />
+            </Link>
+          )}
+          <div className="flex items-center gap-1.5 text-xs text-emerald-400"><span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />Aether Online</div>
+        </div>
       </div>
 
       <div className="flex-1 overflow-auto p-4 space-y-4">

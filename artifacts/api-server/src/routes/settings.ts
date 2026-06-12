@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { db, userSettingsTable } from "@workspace/db";
+import { db, userSettingsTable, documentsTable, knowledgeGraphsTable, documentChunksTable, journalEntriesTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
 
 const router = Router();
@@ -54,6 +54,25 @@ router.put("/settings", async (req, res) => {
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: "Failed to update settings" });
+  }
+});
+
+router.get("/settings/stats", async (_req, res) => {
+  try {
+    const [docs, graphs, chunks, journal] = await Promise.all([
+      db.select().from(documentsTable),
+      db.select().from(knowledgeGraphsTable),
+      db.select().from(documentChunksTable),
+      db.select().from(journalEntriesTable).catch(() => []),
+    ]);
+    res.json({
+      documents: docs.length,
+      graphs: graphs.length,
+      chunks: chunks.length,
+      journalEntries: journal.length,
+    });
+  } catch {
+    res.json({ documents: 0, graphs: 0, chunks: 0, journalEntries: 0 });
   }
 });
 
